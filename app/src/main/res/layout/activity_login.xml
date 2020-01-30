@@ -78,11 +78,11 @@
 
     <ImageView
         android:id="@+id/imageView14"
-        android:layout_width="362dp"
-        android:layout_height="292dp"
+        android:layout_width="196dp"
+        android:layout_height="132dp"
         android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.326"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />

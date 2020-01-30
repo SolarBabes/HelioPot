@@ -27,4 +27,12 @@ public class PlantList extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void addPlant(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+//        EditText editText = (EditText) findViewById(R.id.editText);
+//        String message = editText.getText().toString();
+//        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
+
 }
