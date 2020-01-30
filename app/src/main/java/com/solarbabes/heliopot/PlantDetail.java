@@ -17,7 +17,7 @@ public class PlantDetail extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
     /** Called when the user taps the Send button */
-    public void sendMessage(View view) {
+    public void goToMetric(View view) {
         Intent intent = new Intent(this, MetricData.class);
 //        EditText editText = (EditText) findViewById(R.id.editText);
 //        String message = editText.getText().toString();
