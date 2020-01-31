@@ -11,4 +11,9 @@ public class MetricData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_metric_data);
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

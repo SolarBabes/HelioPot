@@ -55,4 +55,15 @@ public class WateringSchedule extends AppCompatActivity {
         t1.setText(nextWateringTime.toString());
         t2.setText("Plant will be watered at:");
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        super.finish();
+//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

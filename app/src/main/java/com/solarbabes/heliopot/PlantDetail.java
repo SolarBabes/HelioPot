@@ -47,7 +47,8 @@ public class PlantDetail extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        return super.onSupportNavigateUp();
+        onBackPressed();
+        return true;
     }
+
 }

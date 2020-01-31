@@ -19,4 +19,9 @@ public class PlantGallery extends AppCompatActivity {
         gridview.setAdapter(new ImageAdapter(this));
 
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

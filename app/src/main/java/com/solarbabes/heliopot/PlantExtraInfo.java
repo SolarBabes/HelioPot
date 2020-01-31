@@ -42,4 +42,9 @@ public class PlantExtraInfo extends AppCompatActivity {
         plantName = plantNameBox.getText().toString();
         plantNotes = plantNotesBox.getText().toString();
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
