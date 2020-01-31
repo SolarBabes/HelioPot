@@ -28,14 +28,88 @@
                     android:layout_height="269dp"
                     android:layout_marginStart="46dp"
                     android:layout_marginLeft="46dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="52dp"
                     android:layout_marginRight="52dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/plant1" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="51dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:onClick="goToExtraInfo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.443"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout7"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+                    <ImageView
+                        android:id="@+id/imageView15"
+                        android:layout_width="51dp"
+                        android:layout_height="50dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/info" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Plant Info"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView15"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.47000003" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="51dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="8dp"
+                    android:onClick="goToGlallery"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+                    <ImageView
+                        android:id="@+id/imageView16"
+                        android:layout_width="46dp"
+                        android:layout_height="40dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.53999996"
+                        app:srcCompat="@drawable/gallery" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="More Photo"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView16"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.47000003" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -49,8 +123,8 @@
 
                 <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="109dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="24dp"
@@ -288,7 +362,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="123dp"
-                    android:layout_height="51dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="69dp"
                     android:layout_marginLeft="69dp"
                     android:layout_marginTop="24dp"
@@ -358,13 +432,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout5"
-                    android:layout_width="136dp"
-                    android:layout_height="52dp"
+                    android:layout_width="133dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
+                    android:onClick="goToWateringSchedule"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/textView16"
@@ -399,10 +474,13 @@
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginLeft="28dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="16dp"
                     android:text="12.01.2020"
+                    android:textColor="@color/darkgreen"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
             </androidx.constraintlayout.widget.ConstraintLayout>

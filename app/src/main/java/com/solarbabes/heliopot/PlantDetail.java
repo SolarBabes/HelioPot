@@ -25,4 +25,29 @@ public class PlantDetail extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToExtraInfo(View view) {
+        Intent intent = new Intent(this, PlantExtraInfo.class);
+        startActivity(intent);
+    }
+
+    public void goToGlallery(View view) {
+        Intent intent = new Intent(this, PlantGallery.class);
+        startActivity(intent);
+    }
+    public void goToWateringSchedule(View view) {
+        Intent intent = new Intent(this, WateringSchedule.class);
+        startActivity(intent);
+    }
+
+//    @Override
+//    public void finish() {
+//        super.finish();
+//        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        return super.onSupportNavigateUp();
+    }
 }
