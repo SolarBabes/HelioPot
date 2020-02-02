@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "250652038519",
+    "firebase_url": "https://solarbabesdb.firebaseio.com",
+    "project_id": "solarbabesdb",
+    "storage_bucket": "solarbabesdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250652038519:android:37c0dbba3e964b1d99bd72",
+        "android_client_info": {
+          "package_name": "com.solarbabes.heliopot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250652038519-7tstb86goufv44vbinuf85t5u7llrcvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.solarbabes.heliopot",
+            "certificate_hash": "ef95537175df21765abce0459d4e42684b79d17e"
+          }
+        },
+        {
+          "client_id": "250652038519-r391egncf33lte9bkh4babhom6d1o39l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1nSma_tRo9Bs65GuEIJD42Zha9SIfsb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250652038519-r391egncf33lte9bkh4babhom6d1o39l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
