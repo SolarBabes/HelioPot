@@ -23,6 +23,8 @@ android {
 dependencies {
     // Dependency on local binaries
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+
 
 
 //    implementation 'com.google.firebase:firebase-analytics:17.2.2'
