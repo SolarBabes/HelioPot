@@ -1,5 +1,6 @@
 package com.solarbabes.heliopot;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,12 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
+
 
 public class Login extends AppCompatActivity {
 //    private static final String FILE_NAME = "example.txt";
@@ -31,7 +40,40 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        mEditText = findViewById(R.id.username);
+        // Write a message to the database
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("solarbabesdb");
+//        myRef.setValue("Hello, World!");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase.child("000").child("999").setValue("11").addOnSuccessListener(new OnSuccessListener<Void>(){
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Log.d("111","23");
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d("666",e.toString());
+//            }
+//        });
+//        mDatabase.child("bot").child("1").child("light").child("20202051915").setValue("14");
+//        Random rand = new Random();
+//        long a = System.currentTimeMillis();
+//        for (int i = 0; i < 50; i++) {
+//            a=a-500000;
+//            mDatabase.child("bot").child("1").child("wateringtime").child(Long.toString(a)).setValue(Integer.toString(rand.nextInt(20)));
+//            mDatabase.child("bot").child("1").child("temperature").child(Long.toString(a)).setValue(Integer.toString(rand.nextInt(20)));
+//        }
+        
+
+
+
+
+
+
+
+
+
 
         Name = (EditText)findViewById(R.id.username);
         Password = (EditText)findViewById(R.id.password);
@@ -40,7 +82,7 @@ public class Login extends AppCompatActivity {
         String username = load("username.txt");
 
 
-        if (username!=null && !username.equals("")){
+        if (1==2&&username!=null && !username.equals("")){
 //            Log.v(TAG, username);
             Name.setText(username);
             Intent intent = new Intent(this, PlantList.class);
