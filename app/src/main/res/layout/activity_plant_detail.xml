@@ -118,6 +118,7 @@
                 android:layout_width="413dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
@@ -170,7 +171,7 @@
                         app:layout_constraintStart_toEndOf="@+id/imageView8" />
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/textView_temperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="9dp"
@@ -212,7 +213,7 @@
                         app:srcCompat="@drawable/light" />
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/textView_light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -280,7 +281,7 @@
                         app:layout_constraintStart_toEndOf="@+id/imageView10" />
 
                     <TextView
-                        android:id="@+id/textView14"
+                        android:id="@+id/textView_moisture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -338,7 +339,7 @@
                         app:layout_constraintStart_toEndOf="@+id/imageView11" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/textView_humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"

@@ -7,13 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class PlantList extends AppCompatActivity {
@@ -43,7 +39,7 @@ public class PlantList extends AppCompatActivity {
         plantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                sendMessage(view);
+                goToPlantDetail(view);
             }
         });
     }
@@ -51,7 +47,7 @@ public class PlantList extends AppCompatActivity {
     private void fillArrayList() {
         // Manually add a plant to the list of plants here. It will be added to the listVIew.
         PlantListItem plant_one = new PlantListItem(R.drawable.plant1,
-                "Plant 1", "Watering Time: 20:22");
+                "plant1", "Watering Time: 20:22");
         plantItems.add(plant_one);
 
         PlantListItem plant_two = new PlantListItem(R.drawable.plant1,
@@ -88,17 +84,17 @@ public class PlantList extends AppCompatActivity {
     }
 
 
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.MESSAGE";
 
     /** Called when the user taps the Send button */
     // CURRENTLY: If ANY plant is clicked - take to the SAME PlantDetail activity.
     // Later, each plant should have a UNIQUE PAGE.
-    public void sendMessage(View view) {
+    public void goToPlantDetail(View view) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
-//        EditText editText = (EditText) findViewById(R.id.editText);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
+        TextView t1 = findViewById(R.id.textView_Name);
+        String plantName = t1.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, plantName);
         startActivity(intent);
     }
 

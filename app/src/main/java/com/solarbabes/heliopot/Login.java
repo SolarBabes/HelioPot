@@ -14,8 +14,11 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -23,7 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Login extends AppCompatActivity {
@@ -34,7 +38,6 @@ public class Login extends AppCompatActivity {
     private EditText Password;
     private Button Login;
     private static final String TAG = "login";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class Login extends AppCompatActivity {
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("solarbabesdb");
 //        myRef.setValue("Hello, World!");
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("bot/plant1/realtime");
 //        mDatabase.child("000").child("999").setValue("11").addOnSuccessListener(new OnSuccessListener<Void>(){
 //            @Override
 //            public void onSuccess(Void aVoid) {
@@ -64,7 +67,33 @@ public class Login extends AppCompatActivity {
 //            mDatabase.child("bot").child("1").child("wateringtime").child(Long.toString(a)).setValue(Integer.toString(rand.nextInt(20)));
 //            mDatabase.child("bot").child("1").child("temperature").child(Long.toString(a)).setValue(Integer.toString(rand.nextInt(20)));
 //        }
-        
+        Log.d("123",mDatabase.child("pots").child("666").getKey());
+
+
+
+
+
+
+
+        ValueEventListener Listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+//                Log.d("123"," "+dataSnapshot.getKey());
+//                Log.d("123",dataSnapshot.getRef().toString());
+                Log.d("123",dataSnapshot.getValue().toString());
+//                Map<String, Integer> map = (Map<String, Integer>) dataSnapshot.getValue();
+//                Log.d("map",map.toString());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("123", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+//        mDatabase.addValueEventListener(Listener);
+
+
 
 
 
@@ -82,7 +111,7 @@ public class Login extends AppCompatActivity {
         String username = load("username.txt");
 
 
-        if (1==2&&username!=null && !username.equals("")){
+        if (username!=null && !username.equals("")){
 //            Log.v(TAG, username);
             Name.setText(username);
             Intent intent = new Intent(this, PlantList.class);
@@ -99,6 +128,8 @@ public class Login extends AppCompatActivity {
         });
     }
 
+
+
     private void validate(String userName, String userPassword){
         if((userName.equals("Admin")) && (userPassword.equals("1234"))||((!userName.equals(""))&&userName.equals(userPassword))){
             Intent intent = new Intent(this, PlantList.class);
@@ -107,7 +138,6 @@ public class Login extends AppCompatActivity {
 //            Toast.makeText(getApplicationContext(), load("username.txt"), Toast.LENGTH_LONG).show();
             startActivity(intent);
             finish();
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }else{
             Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
         }
