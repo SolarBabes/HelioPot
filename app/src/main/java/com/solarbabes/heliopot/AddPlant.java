@@ -14,7 +14,7 @@ public class AddPlant extends AppCompatActivity {
         setContentView(R.layout.activity_add_plant);
     }
 
-    public void addPlant(View view) {
+    public void onSubmitButtonPress(View view) {
 //        Intent intent = new Intent(this, AddPlant.class);
 //        startActivity(intent);
         onBackPressed();

@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.solarbabes.heliopot">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddPlant"
-            android:parentActivityName=".PlantList"
-            ></activity>
+        <activity
+            android:name=".PlantDetail"/>
+        <activity
+            android:name=".AddPlant"
+            android:parentActivityName=".PlantList" />
         <activity
             android:name=".WateringSchedule"
             android:parentActivityName=".PlantDetail" />
@@ -30,22 +31,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".PlantList"
             android:parentActivityName=".Login" />
         <activity
-            android:name=".PlantDetail"
-            android:parentActivityName=".PlantList" />
-        <activity
             android:name=".MetricData"
             android:parentActivityName=".PlantDetail" />
         <activity
             android:name=".Main2Activity"
-            android:parentActivityName=".MainActivity">
-
-            </activity>
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".PlantList" />
