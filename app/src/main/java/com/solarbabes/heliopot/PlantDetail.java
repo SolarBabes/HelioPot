@@ -30,6 +30,7 @@ public class PlantDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_detail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         plantName = intent.getStringExtra(PlantList.EXTRA_MESSAGE);
 
@@ -46,10 +47,10 @@ public class PlantDetail extends AppCompatActivity {
 
                 Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
 //                Log.d("map",map.toString());
-                temperature_view.setText(map.get("temperature").toString());
-                humidity_view.setText(map.get("humidity").toString());
-                moisture_view.setText(map.get("moisture").toString());
-                light_view.setText(map.get("light").toString());
+                temperature_view.setText(map.get("temperature").toString()+"°C");
+                humidity_view.setText(map.get("humidity").toString()+"%");
+                moisture_view.setText(map.get("moisture").toString()+"%");
+                light_view.setText(map.get("light").toString()+"lux");
 
             }
             @Override

@@ -71,10 +71,6 @@ public class Login extends AppCompatActivity {
 
 
 
-
-
-
-
         ValueEventListener Listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
