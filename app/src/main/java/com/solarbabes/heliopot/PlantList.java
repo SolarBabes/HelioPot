@@ -2,6 +2,7 @@ package com.solarbabes.heliopot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 
 public class PlantList extends AppCompatActivity {
 
-    ListView plantList;
-    ArrayList<PlantListItem> plantItems;
-    PlantListAdapter plantListAdapter;
-    ArrayList<String> plantName = new ArrayList<String>();
+    public static ListView plantList;
+    public static ArrayList<PlantListItem> plantItems = new ArrayList<>();
+    public static PlantListAdapter plantListAdapter;
+    public static ArrayList<String> plantNames = new ArrayList<>();
 
     private static int backtime = 0;
 
@@ -26,23 +27,21 @@ public class PlantList extends AppCompatActivity {
         setContentView(R.layout.activity_plant_list);
         backtime = 0;
 
-        plantItems = new ArrayList<PlantListItem>();
-
         // Filling the list of plants with some initial plants.
         // onCreate is also called when the back button is clicked in the app. This if block
         // then ensures we only add them when the list is first created.
         if (plantItems.size() == 0) {
-            plantName.add("plant1");
-            plantName.add("plant2");
-            plantName.add("plant3");
-            plantName.add("plant4");
-            plantName.add("plant5");
-            plantName.add("plant6");
-            plantName.add("plant7");
-            plantName.add("plant8");
-            plantName.add("plant9");
-            plantName.add("plant10");
-            plantName.add("plant11");
+            plantNames.add("plant1");
+            plantNames.add("plant2");
+            plantNames.add("plant3");
+            plantNames.add("plant4");
+            plantNames.add("plant5");
+            plantNames.add("plant6");
+            plantNames.add("plant7");
+            plantNames.add("plant8");
+            plantNames.add("plant9");
+            plantNames.add("plant10");
+            plantNames.add("plan11");
 
             fillArrayList();
         }
@@ -74,6 +73,7 @@ public class PlantList extends AppCompatActivity {
                         "Watering Time: 20:00");
 
                 plantItems.add(newPlant);
+                plantNames.add(plantName);
                 plantListAdapter.notifyDataSetChanged();
             }
         }
@@ -82,7 +82,7 @@ public class PlantList extends AppCompatActivity {
     private void fillArrayList() {
         // Manually add a plant to the list of plants here. It will be added to the listVIew.
 
-        for (String n:plantName){
+        for (String n:plantNames){
             PlantListItem plant_one = new PlantListItem(R.drawable.plant1,
                     n, "Watering Time: 20:22");
             plantItems.add(plant_one);
@@ -99,7 +99,7 @@ public class PlantList extends AppCompatActivity {
     public void goToPlantDetail(int position) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
-        intent.putExtra(PLANT_NAME, plantName.get(position));
+        intent.putExtra(PLANT_NAME, plantNames.get(position));
         startActivity(intent);
     }
 
