@@ -30,11 +30,8 @@ public class MetricData extends AppCompatActivity {
     private ArrayList<Entry> humidity = new ArrayList<Entry>();
     private ArrayList<Entry> light = new ArrayList<Entry>();
     private LineChart mpLineChart_temperature;
-    private LineChart mpLineChart_moisture;
-    private LineChart mpLineChart_humidity;
-    private LineChart mpLineChart_light;
     ArrayList<Entry> dataVals = new ArrayList<Entry>();
-    Comparator<Entry> c = new Comparator<Entry>(){
+    private Comparator<Entry> c = new Comparator<Entry>(){
         @Override
         public int compare(Entry t1, Entry t2) {
             if (t1.getX()-t2.getX()>0){return 1; }
@@ -60,6 +57,8 @@ public class MetricData extends AppCompatActivity {
                 Map<String, Long> map = (Map<String, Long>) dataSnapshot.child("temperature").getValue();
                 temperature.clear();
                 for (String s:map.keySet()){
+                    Log.d("first",s);
+                    Log.d("second",Long.toString(map.get(s)));
                     temperature.add(new Entry(Long.parseLong(s)-1580000000000L,map.get(s)));
                 }
                 Collections.sort(temperature,c);
@@ -67,54 +66,10 @@ public class MetricData extends AppCompatActivity {
                     temperature.remove(0);
                 }
                 dataSets.clear();
-                dataSets.add(new LineDataSet(temperature,"temperature"));
+                dataSets.add(new LineDataSet(temperature,"data set 1"));
                 mpLineChart_temperature.setData(new LineData(dataSets));
                 mpLineChart_temperature.invalidate();
 
-
-                Map<String, Long> map1 = (Map<String, Long>) dataSnapshot.child("moisture").getValue();
-                moisture.clear();
-                for (String s:map1.keySet()){
-                    moisture.add(new Entry(Long.parseLong(s)-1580000000000L,map1.get(s)));
-                }
-                Collections.sort(moisture,c);
-                while (moisture.size()>31){
-                    moisture.remove(0);
-                }
-                dataSets.clear();
-                dataSets.add(new LineDataSet(moisture,"moisture"));
-                mpLineChart_moisture.setData(new LineData(dataSets));
-                mpLineChart_moisture.invalidate();
-
-
-                Map<String, Long> map2 = (Map<String, Long>) dataSnapshot.child("humidity").getValue();
-                humidity.clear();
-                for (String s:map2.keySet()){
-                    humidity.add(new Entry(Long.parseLong(s)-1580000000000L,map2.get(s)));
-                }
-                Collections.sort(humidity,c);
-                while (humidity.size()>31){
-                    humidity.remove(0);
-                }
-                dataSets.clear();
-                dataSets.add(new LineDataSet(humidity,"humidity"));
-                mpLineChart_humidity.setData(new LineData(dataSets));
-                mpLineChart_humidity.invalidate();
-
-
-                Map<String, Long>  map3 = (Map<String, Long>) dataSnapshot.child("light").getValue();
-                light.clear();
-                for (String s:map3.keySet()){
-                    light.add(new Entry(Long.parseLong(s)-1580000000000L,map3.get(s)));
-                }
-                Collections.sort(light,c);
-                while (light.size()>31){
-                    light.remove(0);
-                }
-                dataSets.clear();
-                dataSets.add(new LineDataSet(light,"light"));
-                mpLineChart_light.setData(new LineData(dataSets));
-                mpLineChart_light.invalidate();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -128,30 +83,9 @@ public class MetricData extends AppCompatActivity {
         mpLineChart_temperature = (LineChart) findViewById(R.id.line_chart_temperature);
         temperature.add(new Entry(0,0));
         dataSets.clear();
-        dataSets.add(new LineDataSet(temperature,"temperature"));
+        dataSets.add(new LineDataSet(temperature,"data set 1"));
         mpLineChart_temperature.setData(new LineData(dataSets));
         mpLineChart_temperature.invalidate();
-
-        mpLineChart_moisture = (LineChart) findViewById(R.id.line_chart_moisture);
-        moisture.add(new Entry(0,0));
-        dataSets.clear();
-        dataSets.add(new LineDataSet(moisture,"moisture"));
-        mpLineChart_moisture.setData(new LineData(dataSets));
-        mpLineChart_moisture.invalidate();
-
-        mpLineChart_humidity = (LineChart) findViewById(R.id.line_chart_humidity);
-        humidity.add(new Entry(0,0));
-        dataSets.clear();
-        dataSets.add(new LineDataSet(humidity,"humidity"));
-        mpLineChart_humidity.setData(new LineData(dataSets));
-        mpLineChart_humidity.invalidate();
-
-        mpLineChart_light = (LineChart) findViewById(R.id.line_chart_light);
-        light.add(new Entry(0,0));
-        dataSets.clear();
-        dataSets.add(new LineDataSet(light,"light"));
-        mpLineChart_light.setData(new LineData(dataSets));
-        mpLineChart_light.invalidate();
 
     }
 
