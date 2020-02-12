@@ -2,27 +2,21 @@ package com.solarbabes.heliopot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class PlantList extends AppCompatActivity {
 
-    public static ListView plantList;
-    public static ArrayList<PlantListItem> plantItems = new ArrayList<>();
-    public static PlantListAdapter plantListAdapter;
+    ListView plantList;
+    ArrayList<PlantListItem> plantItems;
+    PlantListAdapter plantListAdapter;
+    ArrayList<String> plantName = new ArrayList<String>();
 
     private static int backtime = 0;
 
@@ -32,10 +26,24 @@ public class PlantList extends AppCompatActivity {
         setContentView(R.layout.activity_plant_list);
         backtime = 0;
 
+        plantItems = new ArrayList<PlantListItem>();
+
         // Filling the list of plants with some initial plants.
         // onCreate is also called when the back button is clicked in the app. This if block
         // then ensures we only add them when the list is first created.
         if (plantItems.size() == 0) {
+            plantName.add("plant1");
+            plantName.add("plant2");
+            plantName.add("plant3");
+            plantName.add("plant4");
+            plantName.add("plant5");
+            plantName.add("plant6");
+            plantName.add("plant7");
+            plantName.add("plant8");
+            plantName.add("plant9");
+            plantName.add("plant10");
+            plantName.add("plant11");
+
             fillArrayList();
         }
 
@@ -48,7 +56,7 @@ public class PlantList extends AppCompatActivity {
         plantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                sendMessage(view);
+                goToPlantDetail(position);
             }
         });
     }
@@ -73,49 +81,25 @@ public class PlantList extends AppCompatActivity {
 
     private void fillArrayList() {
         // Manually add a plant to the list of plants here. It will be added to the listVIew.
-        PlantListItem plant_one = new PlantListItem(R.drawable.plant1,
-                "Plant 1", "Watering Time: 20:22");
-        plantItems.add(plant_one);
 
-        PlantListItem plant_two = new PlantListItem(R.drawable.plant1,
-                "Plant 2", "Watering Time: 20:15");
-        plantItems.add(plant_two);
+        for (String n:plantName){
+            PlantListItem plant_one = new PlantListItem(R.drawable.plant1,
+                    n, "Watering Time: 20:22");
+            plantItems.add(plant_one);
+        }
 
-        PlantListItem plant_three = new PlantListItem(R.drawable.plant1,
-                "Plant 3", "Watering Time: 20:22");
-        plantItems.add(plant_three);
-
-        PlantListItem plant_four = new PlantListItem(R.drawable.plant1,
-                "Plant 4", "Watering Time: 20:15");
-        plantItems.add(plant_four);
-
-        PlantListItem plant_five = new PlantListItem(R.drawable.plant1,
-                "Plant 5", "Watering Time: 20:22");
-        plantItems.add(plant_five);
-
-        PlantListItem plant_six = new PlantListItem(R.drawable.plant1,
-                "Plant 6", "Watering Time: 20:15");
-        plantItems.add(plant_six);
-
-        PlantListItem plant_seven = new PlantListItem(R.drawable.plant1,
-                "Plant 7", "Watering Time: 20:22");
-        plantItems.add(plant_seven);
-
-        PlantListItem plant_eight = new PlantListItem(R.drawable.plant1,
-                "Plant 8", "Watering Time: 20:15");
-        plantItems.add(plant_eight);
-
-        PlantListItem plant_nine = new PlantListItem(R.drawable.plant1,
-                "Plant 9", "Watering Time: 20:15");
-        plantItems.add(plant_nine);
     }
+
+
+    public static final String PLANT_NAME = "com.solarbabes.heliopot.MESSAGE";
 
     /** Called when the user taps the Send button */
     // CURRENTLY: If ANY plant is clicked - take to the SAME PlantDetail activity.
     // Later, each plant should have a UNIQUE PAGE.
-    public void sendMessage(View view) {
+    public void goToPlantDetail(int position) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
+        intent.putExtra(PLANT_NAME, plantName.get(position));
         startActivity(intent);
     }
 
