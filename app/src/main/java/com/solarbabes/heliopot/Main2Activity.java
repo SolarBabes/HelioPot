@@ -2,88 +2,98 @@ package com.solarbabes.heliopot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.content.Context;
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
-    private static final String FILE_NAME = "example.txt";
+    LineChart mpLineChart;
+    ArrayList<Entry> dataVals = new ArrayList<Entry>();
+//    LineDataSet lineDataSet1;
+    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-    EditText mEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        mpLineChart = (LineChart) findViewById(R.id.line_chart);
 
-        mEditText = findViewById(R.id.edit_text);
+
+
+        dataVals.add(new Entry(1,10));
+        dataVals.add(new Entry(2,10));
+        dataVals.add(new Entry(3,0));
+        dataVals.add(new Entry(4,70));
+        dataVals.add(new Entry(5,50));
+        dataVals.add(new Entry(6,40));
+
+
+//        lineDataSet1 = new LineDataSet(dataVals,"data set 1");
+        dataSets.clear();
+        dataSets.add(new LineDataSet(dataVals,"data set 1"));
+
+//        mpLineChart.setBackgroundColor(Color.BLUE);
+//        mpLineChart.setNoDataText("NO DATA");
+
+//        LineData data = new LineData(dataSets);
+        mpLineChart.setData(new LineData(dataSets));
+        mpLineChart.invalidate();
+        Log.d("draw","1");
+
+
+
+
+
     }
 
-    public void save(View v) {
-        String text = mEditText.getText().toString();
-        FileOutputStream fos = null;
-
-        try {
-            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(text.getBytes());
-
-            mEditText.getText().clear();
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME,
-                    Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    private ArrayList<Entry> dataValues1(){
+        ArrayList<Entry> dataVals = new ArrayList<Entry>();
+        dataVals.add(new Entry(1,10));
+        dataVals.add(new Entry(2,10));
+        dataVals.add(new Entry(3,0));
+        dataVals.add(new Entry(4,70));
+        dataVals.add(new Entry(5,50));
+        dataVals.add(new Entry(6,40));
+        return dataVals;
     }
 
-    public void load(View v) {
-        FileInputStream fis = null;
+    public void do1(View view) {
+        dataVals.remove(0);
 
-        try {
-            fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
+        dataVals.add(new Entry(7,10));
+        dataVals.add(new Entry(8,80));
 
-            while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
-            }
 
-            mEditText.setText(sb.toString());
+//        lineDataSet1 = new LineDataSet(dataVals,"data set 1");
+        dataSets.clear();
+        dataSets.add(new LineDataSet(dataVals,"data set 1"));
+        mpLineChart.setData(new LineData(dataSets));
+        mpLineChart.invalidate();
+        Log.d("draw","2");
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
+
+
+
 }

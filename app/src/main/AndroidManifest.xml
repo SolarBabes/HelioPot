@@ -40,7 +40,7 @@
             android:parentActivityName=".PlantDetail" />
         <activity
             android:name=".Main2Activity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".PlantList"></activity>
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".PlantList" />

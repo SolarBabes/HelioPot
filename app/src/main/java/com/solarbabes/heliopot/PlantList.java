@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,6 +33,10 @@ public class PlantList extends AppCompatActivity {
         plantName.add("plant5");
         plantName.add("plant6");
         plantName.add("plant7");
+        plantName.add("plant8");
+        plantName.add("plant9");
+        plantName.add("plant10");
+        plantName.add("plant11");
 
         plantItems = new ArrayList<PlantListItem>();
         plantList = (ListView) findViewById(R.id.listView_Plants);
@@ -66,7 +68,7 @@ public class PlantList extends AppCompatActivity {
     }
 
 
-    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.MESSAGE";
+    public static final String PLANT_NAME = "com.solarbabes.heliopot.MESSAGE";
 
     /** Called when the user taps the Send button */
     // CURRENTLY: If ANY plant is clicked - take to the SAME PlantDetail activity.
@@ -74,17 +76,17 @@ public class PlantList extends AppCompatActivity {
     public void goToPlantDetail(int position) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
-        intent.putExtra(EXTRA_MESSAGE, plantName.get(position));
+        intent.putExtra(PLANT_NAME, plantName.get(position));
         startActivity(intent);
     }
 
     // To be called when the + button is clicked.
     public void addPlant(View view) {
         backtime = 0;
-        Intent intent = new Intent(this, AddPlant.class);
+        Intent intent = new Intent(this, Main2Activity.class);
 //        EditText editText = (EditText) findViewById(R.id.editText);
 //        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
+//        intent.putExtra(PLANT_NAME, message);
         startActivity(intent);
     }
     @Override

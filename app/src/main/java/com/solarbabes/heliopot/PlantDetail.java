@@ -1,6 +1,5 @@
 package com.solarbabes.heliopot;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,7 +31,7 @@ public class PlantDetail extends AppCompatActivity {
         setContentView(R.layout.activity_plant_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        plantName = intent.getStringExtra(PlantList.EXTRA_MESSAGE);
+        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
 
 
         temperature_view = findViewById(R.id.textView_temperature);
@@ -69,9 +68,8 @@ public class PlantDetail extends AppCompatActivity {
     /** Called when the user taps the Send button */
     public void goToMetric(View view) {
         Intent intent = new Intent(this, MetricData.class);
-//        EditText editText = (EditText) findViewById(R.id.editText);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
+        String message = plantName;
+        intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
 

@@ -221,7 +221,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
-                        android:text="loading20lux"
+                        android:text="loading"
                         android:textColor="@color/darkgreen"
                         android:textSize="18sp"
                         android:textStyle="bold"
