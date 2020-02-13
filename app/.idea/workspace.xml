@@ -11,17 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cee63d07-76ec-4be2-974d-9ea0e1134368" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/MetricData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/MetricData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/PlantDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/PlantDetail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/PlantList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/PlantList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/PlantListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/solarbabes/heliopot/PlantListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_metric_data.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_metric_data.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -481,7 +471,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581470721905</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Display 4 different data in the line chart.">
+      <created>1581626825912</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1581626825912</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -608,7 +605,8 @@
     <MESSAGE value="Fix multiple plants." />
     <MESSAGE value="Add dynamic chart." />
     <MESSAGE value="Add dynamic chart(single chart works well)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add dynamic chart(single chart works well)." />
+    <MESSAGE value="Display 4 different data in the line chart." />
+    <option name="LAST_COMMIT_MESSAGE" value="Display 4 different data in the line chart." />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/40d203d0674822dbdfc1bb4103e3a3d4/firebase-database-19.2.1/jars/classes.jar!/com/google/firebase/database/FirebaseDatabase.class">
