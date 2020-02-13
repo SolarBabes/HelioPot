@@ -3,10 +3,13 @@ package com.solarbabes.heliopot;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -25,12 +28,9 @@ import java.util.Map;
 public class MetricData extends AppCompatActivity {
     private static String plantName;
     private static String[] allMeasurements = {"temperature", "moisture", "humidity", "light"};
-    private ArrayList<Entry> temperature = new ArrayList<Entry>();
-    private ArrayList<Entry> moisture = new ArrayList<Entry>();
-    private ArrayList<Entry> humidity = new ArrayList<Entry>();
-    private ArrayList<Entry> light = new ArrayList<Entry>();
-    private LineChart mpLineChart_temperature;
-    ArrayList<Entry> dataVals = new ArrayList<Entry>();
+//    private ArrayList<Entry> dataVals = new ArrayList<Entry>();
+    private LineChart[] mpLineChart = new LineChart[4];
+//    ArrayList<Entry>[] dataVals = new ArrayList[4];
     private Comparator<Entry> c = new Comparator<Entry>(){
         @Override
         public int compare(Entry t1, Entry t2) {
@@ -40,8 +40,37 @@ public class MetricData extends AppCompatActivity {
             }
         }
     };
+    private DatabaseReference mDatabase;
+    ValueEventListener Listener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Log.d("metric","change");
+            for (int i = 0; i < 4; i++) {
+                Map<String, Long> map = (Map<String, Long>) dataSnapshot.child(allMeasurements[i]).getValue();
+                ArrayList<Entry> dataVals = new ArrayList<Entry>();
+                for (String s:map.keySet()){
+//                        Log.d(allMeasurements[i],s+" "+Long.toString(map.get(s)));
+                    dataVals.add(new Entry(Long.parseLong(s)-1580000000L,map.get(s)));
+                }
+                Collections.sort(dataVals,c);
+                while (dataVals.size()>31){
+                    dataVals.remove(0);
+                }
+                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                LineDataSet lineDataSet = new LineDataSet(dataVals,allMeasurements[i]);
+                lineDataSet.setLineWidth(3);
 
-    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                dataSets.add(lineDataSet);
+                mpLineChart[i].setData(new LineData(dataSets));
+                mpLineChart[i].invalidate();
+            }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.w("123", "loadPost:onCancelled", databaseError.toException());
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,66 +78,48 @@ public class MetricData extends AppCompatActivity {
         setContentView(R.layout.activity_metric_data);
         Intent intent = getIntent();
         plantName = intent.getStringExtra(PlantList.PLANT_NAME);
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName);
+        mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName);
 
-        ValueEventListener Listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Long> map = (Map<String, Long>) dataSnapshot.child("temperature").getValue();
-                temperature.clear();
-                for (String s:map.keySet()){
-                    Log.d("first",s);
-                    Log.d("second",Long.toString(map.get(s)));
-                    temperature.add(new Entry(Long.parseLong(s)-1580000000000L,map.get(s)));
-                }
-                Collections.sort(temperature,c);
-                while (temperature.size()>31){
-                    temperature.remove(0);
-                }
-                dataSets.clear();
-                dataSets.add(new LineDataSet(temperature,"data set 1"));
-                mpLineChart_temperature.setData(new LineData(dataSets));
-                mpLineChart_temperature.invalidate();
+        mpLineChart[0] = (LineChart) findViewById(R.id.line_chart_temperature);
+        mpLineChart[1] = (LineChart) findViewById(R.id.line_chart_moisture);
+        mpLineChart[2] = (LineChart) findViewById(R.id.line_chart_humidity);
+        mpLineChart[3] = (LineChart) findViewById(R.id.line_chart_light);
 
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("123", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
+
+        Description description = new Description();
+        description.setText("");
+        for (int i = 0; i < 4; i++) {
+            Legend legend = mpLineChart[i].getLegend();
+            legend.setEnabled(false);
+            mpLineChart[i].setDescription(description);
+
+        }
+        mpLineChart[0].setTouchEnabled(false);
+//        mpLineChart[1].setScaleEnabled(false);
+//        mpLineChart[0].setXAxisRenderer();
+
         mDatabase.addValueEventListener(Listener);
 
-
-        mpLineChart_temperature = (LineChart) findViewById(R.id.line_chart_temperature);
-        temperature.add(new Entry(0,0));
-        dataSets.clear();
-        dataSets.add(new LineDataSet(temperature,"data set 1"));
-        mpLineChart_temperature.setData(new LineData(dataSets));
-        mpLineChart_temperature.invalidate();
-
+        for (int i = 0; i < 4; i++) {
+            ArrayList<Entry> dataVals = new ArrayList<Entry>();
+            dataVals.add(new Entry(0,0));
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            LineDataSet lineDataSet = new LineDataSet(dataVals,allMeasurements[i]);
+            lineDataSet.setLineWidth(3);
+            dataSets.add(lineDataSet);
+            mpLineChart[i].setData(new LineData(dataSets));
+            mpLineChart[i].invalidate();
+        }
     }
-
-    private ArrayList<Entry> dataValues1(){
-        ArrayList<Entry> dataVals = new ArrayList<Entry>();
-        dataVals.add(new Entry(1,10));
-        dataVals.add(new Entry(2,10));
-        dataVals.add(new Entry(3,0));
-        dataVals.add(new Entry(4,70));
-        dataVals.add(new Entry(5,50));
-        dataVals.add(new Entry(6,40));
-        return dataVals;
-    }
-
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
-
-
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mDatabase.removeEventListener(Listener);
+    }
 }

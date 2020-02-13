@@ -43,7 +43,7 @@ public class PlantList extends AppCompatActivity {
 
         fillArrayList();
 
-        plantListAdapter = new PlantListAdapter(getApplicationContext(), plantItems);
+        plantListAdapter = new PlantListAdapter(this, plantItems);
 
         plantList.setAdapter(plantListAdapter);
 
@@ -83,7 +83,7 @@ public class PlantList extends AppCompatActivity {
     // To be called when the + button is clicked.
     public void addPlant(View view) {
         backtime = 0;
-        Intent intent = new Intent(this, Main2Activity.class);
+        Intent intent = new Intent(this, AddPlant.class);
 //        EditText editText = (EditText) findViewById(R.id.editText);
 //        String message = editText.getText().toString();
 //        intent.putExtra(PLANT_NAME, message);

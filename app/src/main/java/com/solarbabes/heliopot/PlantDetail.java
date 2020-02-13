@@ -24,6 +24,25 @@ public class PlantDetail extends AppCompatActivity {
     private static TextView moisture_view ;
     private static TextView light_view ;
 
+    ValueEventListener Listener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
+//                Log.d("map",map.toString());
+            temperature_view.setText(map.get("temperature").toString()+"°C");
+            humidity_view.setText(map.get("humidity").toString()+"%");
+            moisture_view.setText(map.get("moisture").toString()+"%");
+            light_view.setText(map.get("light").toString()+"lux");
+
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            // Getting Post failed, log a message
+            Log.w("123", "loadPost:onCancelled", databaseError.toException());
+        }
+    };
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +58,8 @@ public class PlantDetail extends AppCompatActivity {
         moisture_view = findViewById(R.id.textView_moisture);
         light_view = findViewById(R.id.textView_light);
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName+"/realtime");
-        ValueEventListener Listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName+"/realtime");
 
-                Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
-//                Log.d("map",map.toString());
-                temperature_view.setText(map.get("temperature").toString()+"°C");
-                humidity_view.setText(map.get("humidity").toString()+"%");
-                moisture_view.setText(map.get("moisture").toString()+"%");
-                light_view.setText(map.get("light").toString()+"lux");
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("123", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
         mDatabase.addValueEventListener(Listener);
 
 
@@ -98,5 +100,12 @@ public class PlantDetail extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mDatabase.removeEventListener(Listener);
+    }
+
 
 }

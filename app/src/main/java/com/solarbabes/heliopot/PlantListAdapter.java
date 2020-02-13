@@ -40,7 +40,7 @@ public class PlantListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Each plant item (row) will have an imageView and two textViews.
-
+        System.out.println(position);
         if (convertView == null) {
             convertView = thisInflater.inflate(R.layout.plant_list_item, parent, false);
 
