@@ -1,6 +1,7 @@
 package com.solarbabes.heliopot;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class PlantListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Each plant item (row) will have an imageView and two textViews.
-        System.out.println(position);
+        Log.d("position",Integer.toString(position));
         if (convertView == null) {
             convertView = thisInflater.inflate(R.layout.plant_list_item, parent, false);
 

@@ -38,6 +38,7 @@ public class Login extends AppCompatActivity {
     private EditText Password;
     private Button Login;
     private static final String TAG = "login";
+    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,15 +106,14 @@ public class Login extends AppCompatActivity {
         Login = (Button)findViewById(R.id.login);
 
         String username = load("username.txt");
+        username=username.replaceAll("[^a-zA-Z0-9]","");
 
 
         if (username!=null && !username.equals("")){
 //            Log.v(TAG, username);
             Name.setText(username);
-            Intent intent = new Intent(this, PlantList.class);
             Toast.makeText(getApplicationContext(),"Welcome Back!"+username, Toast.LENGTH_LONG).show();
-            startActivity(intent);
-            finish();
+            gotoList(username);
         }
 
         Login.setOnClickListener(new View.OnClickListener() {
@@ -124,16 +124,23 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    private void gotoList(String username){
+        Intent intent = new Intent(this, PlantList.class);
+        String message = username;
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+        finish();
+    }
 
 
-    private void validate(String userName, String userPassword){
-        if((userName.equals("Admin")) && (userPassword.equals("1234"))||((!userName.equals(""))&&userName.equals(userPassword))){
-            Intent intent = new Intent(this, PlantList.class);
-            save("username.txt", userName);
+    private void validate(String username, String userPassword){
+        username=username.replaceAll("[^a-zA-Z0-9]","");
+        if((username.equals("Admin")) && (userPassword.equals("1234"))||((!username.equals(""))&&username.equals(userPassword))){
 
-//            Toast.makeText(getApplicationContext(), load("username.txt"), Toast.LENGTH_LONG).show();
-            startActivity(intent);
-            finish();
+            save("username.txt", username);
+            gotoList(username);
+
+
         }else{
             Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
         }
@@ -142,6 +149,7 @@ public class Login extends AppCompatActivity {
 
 
     public void save(String name, String text) {
+
 //        String text = mEditText.getText().toString();
 
         FileOutputStream fos = null;
