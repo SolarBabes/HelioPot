@@ -1,19 +1,15 @@
 package com.solarbabes.heliopot;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,9 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class PlantList extends AppCompatActivity {
 
@@ -59,8 +55,17 @@ public class PlantList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         backtime = 0;
         setContentView(R.layout.activity_plant_list);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.action_logout);
+        setSupportActionBar(myToolbar);
+
+
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setHomeAsUpIndicator(R.drawable.logo);
         Intent intent = getIntent();
         username = intent.getStringExtra(Login.EXTRA_MESSAGE);
+        username=username.replaceAll("[^a-zA-Z0-9]","");
         Log.d("username",username);
         Log.d("username",Integer.toString(username.length()));
         mDatabase = FirebaseDatabase.getInstance().getReference("user/"+username);
@@ -136,6 +141,24 @@ public class PlantList extends AppCompatActivity {
             super.onBackPressed();
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_logout:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                Toast.makeText(getApplicationContext(),"hhhhhhhh", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 }

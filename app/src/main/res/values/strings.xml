@@ -17,4 +17,8 @@
         <item>Office</item>
         <item>Home</item>
     </string-array>
+    <string name="title_activity_main3">Main3Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
