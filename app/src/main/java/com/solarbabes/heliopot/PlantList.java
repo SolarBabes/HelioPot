@@ -35,7 +35,7 @@ public class PlantList extends AppCompatActivity {
     ValueEventListener Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            Log.d("1",dataSnapshot.child("plant").getValue().toString());
+
             for (DataSnapshot postSnapshot: dataSnapshot.child("plant").getChildren()) {
                 Log.e("Get Data", postSnapshot.child("name").getValue().toString());
                 String name = postSnapshot.child("name").getValue().toString();

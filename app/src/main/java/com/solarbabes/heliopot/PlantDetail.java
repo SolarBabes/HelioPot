@@ -19,6 +19,7 @@ import java.util.Map;
 public class PlantDetail extends AppCompatActivity {
     private static String plantName;
     public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.MESSAGE";
+    // TODO delete static
     private static TextView temperature_view ;
     private static TextView humidity_view ;
     private static TextView moisture_view ;
