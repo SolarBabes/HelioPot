@@ -20,6 +20,9 @@ import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+//import androidx.navigation.NavController;
+//import androidx.navigation.Navigation;
+
 
 public class PlantList extends AppCompatActivity {
 
@@ -56,8 +59,6 @@ public class PlantList extends AppCompatActivity {
         backtime = 0;
         setContentView(R.layout.activity_plant_list);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.action_logout);
-        setSupportActionBar(myToolbar);
 
 
 //        ActionBar actionBar = getSupportActionBar();
