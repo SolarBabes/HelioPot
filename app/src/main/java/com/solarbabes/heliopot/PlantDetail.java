@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import android.widget.CompoundButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class PlantDetail extends AppCompatActivity {
@@ -32,11 +34,14 @@ public class PlantDetail extends AppCompatActivity {
     private EditText Interval;
     private Button send;
     private int interval = 0;
+    private TextView FirstWateringTime;
+    private TextView SecondWateringTime;
+    private TextView ThirdWateringTime;
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd-MM-yyyy");
 
-    ValueEventListener Listener = new ValueEventListener() {
+    ValueEventListener WateringListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-//            Log.d("111",dataSnapshot.child("interval").toString());
             interval = Integer.parseInt(dataSnapshot.child("interval").getValue().toString());
             if (interval>=0){
                 switch1.setChecked(true);
@@ -47,6 +52,9 @@ public class PlantDetail extends AppCompatActivity {
                 send.setVisibility(View.GONE);
                 Interval.setVisibility(View.GONE);
             }
+            FirstWateringTime.setText(sdf.format(new Date(Long.parseLong(dataSnapshot.child("water1").getValue().toString())*1000)));
+            SecondWateringTime.setText(sdf.format(new Date(Long.parseLong(dataSnapshot.child("water2").getValue().toString())*1000)));
+            ThirdWateringTime.setText(sdf.format(new Date(Long.parseLong(dataSnapshot.child("water3").getValue().toString())*1000)));
             Interval.setText(Integer.toString(interval/60));
         }
         @Override
@@ -55,17 +63,14 @@ public class PlantDetail extends AppCompatActivity {
             Log.w("123", "loadPost:onCancelled", databaseError.toException());
         }
     };
-    ValueEventListener WateringListener = new ValueEventListener() {
+    ValueEventListener Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-
             Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
-//                Log.d("map",map.toString());
             temperature_view.setText(map.get("temperature").toString()+"°C");
             humidity_view.setText(map.get("humidity").toString()+"%");
             moisture_view.setText(map.get("moisture").toString()+"%");
             light_view.setText(map.get("light").toString()+"lux");
-
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
@@ -86,7 +91,6 @@ public class PlantDetail extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(WateringListener);
         mDatabase.addValueEventListener(Listener);
 
-
         temperature_view = findViewById(R.id.textView_temperature);
         humidity_view = findViewById(R.id.textView_humidity);
         moisture_view = findViewById(R.id.textView_moisture);
@@ -94,13 +98,14 @@ public class PlantDetail extends AppCompatActivity {
         switch1 = (Switch) findViewById(R.id.switch1);
         Interval = findViewById(R.id.interval);
         send = findViewById(R.id.sendButton);
+        FirstWateringTime = findViewById(R.id.FirstWateringTime);
+        SecondWateringTime = findViewById(R.id.SecondWateringTime);
+        ThirdWateringTime = findViewById(R.id.ThirdWateringTime);
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Log.d("switch",Boolean.toString(b));
-//                send.setEnabled(b);
-//                Interval.setEnabled(b);
                 if (b){
                     send.setVisibility(View.VISIBLE);
                     Interval.setVisibility(View.VISIBLE);
@@ -114,12 +119,14 @@ public class PlantDetail extends AppCompatActivity {
         });
     }
 
-
-
-
-
     public void sendWateringTime(View view){
-        mDatabase.child("interval").setValue(Integer.parseInt(Interval.getText().toString())*60);
+        mDatabase.child("interval").setValue(Math.round(Float.parseFloat(Interval.getText().toString())*60));
+        mDatabase.child("settingtime").setValue(System.currentTimeMillis()/1000);
+        FirstWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*1000)));
+        SecondWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*2000)));
+        ThirdWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*3000)));
+        
+
     }
 
     /** Called when the user taps the Send button */

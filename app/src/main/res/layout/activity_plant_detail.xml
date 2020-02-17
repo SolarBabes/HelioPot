@@ -428,11 +428,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/FirstWateringTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:text="12.01.2020 16:00"
+                    android:layout_marginStart="36dp"
+                    android:text="Loading"
                     android:textColor="@color/darkgreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -440,28 +440,28 @@
                     app:layout_constraintTop_toTopOf="@+id/textView19" />
 
                 <TextView
-                    android:id="@+id/textView26"
+                    android:id="@+id/SecondWateringTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="12.01.2020 16:15"
+                    android:text="Loading"
                     android:textColor="@color/darkgreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView18"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                    app:layout_constraintStart_toStartOf="@+id/FirstWateringTime"
+                    app:layout_constraintTop_toBottomOf="@+id/FirstWateringTime" />
 
                 <TextView
-                    android:id="@+id/textView28"
+                    android:id="@+id/ThirdWateringTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="12.01.2020 16:30"
+                    android:text="Loading"
                     android:textColor="@color/darkgreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView26"
-                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                    app:layout_constraintStart_toStartOf="@+id/SecondWateringTime"
+                    app:layout_constraintTop_toBottomOf="@+id/SecondWateringTime" />
 
                 <TextView
                     android:id="@+id/textView19"
@@ -533,9 +533,9 @@
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:hint="Interval (mins)"
-                    android:inputType="textPersonName"
                     app:layout_constraintStart_toStartOf="@+id/textView16"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView16"
+                    android:inputType="number"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
