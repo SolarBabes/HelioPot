@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 //import androidx.navigation.NavController;
 //import androidx.navigation.Navigation;
 
@@ -28,51 +26,37 @@ import androidx.appcompat.widget.Toolbar;
 public class PlantList extends AppCompatActivity {
 
     ListView plantList;
-    ArrayList<PlantListItem> plantItems = new ArrayList<PlantListItem>();
+    ArrayList<PlantListItem> plantItems = new ArrayList<>();
     PlantListAdapter plantListAdapter;
-    ArrayList<String> plantName = new ArrayList<String>();
+    ArrayList<String> plantNames = new ArrayList<String>();
     private DatabaseReference mDatabase;
-    ValueEventListener Listener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-            for (DataSnapshot postSnapshot: dataSnapshot.child("plant").getChildren()) {
-                Log.e("Get Data", postSnapshot.child("name").getValue().toString());
-                String name = postSnapshot.child("name").getValue().toString();
-                if (!plantName.contains(name)){
-                    plantName.add(name);
-                }
-                setListAdapter();
-            }
-        }
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            Log.w("123", "loadPost:onCancelled", databaseError.toException());
-        }
-    };
 
     private static int backtime = 0;
     public static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initial setup of layout.
         super.onCreate(savedInstanceState);
         backtime = 0;
         setContentView(R.layout.activity_plant_list);
 
+        // Username is passed in from Login Activity.
+        // Retrieving plants stored for this username.
         Intent intent = getIntent();
-        username = intent.getStringExtra(Login.EXTRA_MESSAGE);
-        username=username.replaceAll("[^a-zA-Z0-9]","");
-        Log.d("username",username);
-        Log.d("username",Integer.toString(username.length()));
+        username = intent.getStringExtra(Login.USERNAME);
+        username = username.replaceAll("[^a-zA-Z0-9]","");
         mDatabase = FirebaseDatabase.getInstance().getReference("user/"+username);
+
+        // A listener for database values updated.
+        // Events dealt with by the overridden Listener below.
         mDatabase.addValueEventListener(Listener);
 
+        // Populating list with retrieved plants (via adapter).
         plantList = (ListView) findViewById(R.id.listView_Plants);
+//        updatePlants();
 
-        setListAdapter();
-
-        // A click listener for the listView.
+        // A listener for clicking items in the list.
         plantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -80,10 +64,47 @@ public class PlantList extends AppCompatActivity {
             }
         });
     }
-    private void setListAdapter(){
+
+    // Listener for database updates.
+    ValueEventListener Listener = new ValueEventListener() {
+        @Override
+        // If it is detected that data in the database has changed, update the plant list.
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            updatePlants(dataSnapshot);
+
+//            for (DataSnapshot plant : dataSnapshot.child("plants").getChildren()) {
+//                String name = plant.child("name").getValue().toString();
+//                if (!plantNames.contains(name)){
+//                    plantNames.add(name);
+//                }
+//                updatePlants();
+//            }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.w("123", "loadPost:onCancelled", databaseError.toException());
+        }
+    };
+
+
+    private void updatePlants(DataSnapshot update){
         //TODO here, if one plant is added, it invokes setAdapter to refresh it, but there is something wrong
         // so when adding new plant, only action is change the online database
-        fillArrayList();
+
+        // Filling the list with new plants retrieved from the database.
+        // Each time a change is detected, the list is completely remade.
+
+        plantItems = new ArrayList<>();
+
+        for (DataSnapshot plant : update.child("plants").getChildren()) {
+            //TODO Add real values to retrieve from server for picID & watering time.
+            int picID = R.drawable.plant1;
+            String wateringTime = "Watering Time: 20:22";
+            String name = plant.child("name").getValue().toString();
+            plantItems.add(new PlantListItem(picID, name, wateringTime));
+        }
+
         plantList.setAdapter(new PlantListAdapter(this, plantItems));
     };
 
@@ -100,26 +121,13 @@ public class PlantList extends AppCompatActivity {
                         "Watering Time: 20:00");
 
                 plantItems.add(newPlant);
-                plantName.add(p);
+                plantNames.add(p);
                 plantListAdapter.notifyDataSetChanged();
             }
         }
     }
 
-    private void fillArrayList() {
-        // Creating plants for all plants in plant name list.
 
-        ArrayList<PlantListItem> newPlants = new ArrayList<>();
-
-        for (String n:plantName){
-            PlantListItem plant = new PlantListItem(R.drawable.plant1,
-                    n, "Watering Time: 20:22");
-            newPlants.add(plant);
-        }
-
-        plantItems = newPlants;
-
-    }
 
 
     public static final String PLANT_NAME = "com.solarbabes.heliopot.MESSAGE";
@@ -130,7 +138,7 @@ public class PlantList extends AppCompatActivity {
     public void goToPlantDetail(int position) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
-        intent.putExtra(PLANT_NAME, plantName.get(position));
+        intent.putExtra(PLANT_NAME, plantNames.get(position));
         startActivity(intent);
     }
 
