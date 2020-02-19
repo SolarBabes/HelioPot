@@ -1,5 +1,6 @@
 package com.solarbabes.heliopot;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,11 +60,6 @@ public class PlantList extends AppCompatActivity {
         backtime = 0;
         setContentView(R.layout.activity_plant_list);
 
-
-
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setHomeAsUpIndicator(R.drawable.logo);
         Intent intent = getIntent();
         username = intent.getStringExtra(Login.EXTRA_MESSAGE);
         username=username.replaceAll("[^a-zA-Z0-9]","");
@@ -71,8 +67,6 @@ public class PlantList extends AppCompatActivity {
         Log.d("username",Integer.toString(username.length()));
         mDatabase = FirebaseDatabase.getInstance().getReference("user/"+username);
         mDatabase.addValueEventListener(Listener);
-
-//        plantName.add("plant1");
 
         plantList = (ListView) findViewById(R.id.listView_Plants);
 
@@ -93,14 +87,37 @@ public class PlantList extends AppCompatActivity {
         plantList.setAdapter(new PlantListAdapter(this, plantItems));
     };
 
+    // A listener for new plants being passed back from the 'AddPlant' activity.
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                String p = data.getStringExtra("PLANT_NAME");
+                // Note most of the added plant is hardcoded for now.
+                PlantListItem newPlant = new PlantListItem(R.drawable.plant2, p,
+                        "Watering Time: 20:00");
+
+                plantItems.add(newPlant);
+                plantName.add(p);
+                plantListAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
     private void fillArrayList() {
-        // Manually add a plant to the list of plants here. It will be added to the listVIew.
+        // Creating plants for all plants in plant name list.
+
+        ArrayList<PlantListItem> newPlants = new ArrayList<>();
 
         for (String n:plantName){
-            PlantListItem plant_one = new PlantListItem(R.drawable.plant1,
+            PlantListItem plant = new PlantListItem(R.drawable.plant1,
                     n, "Watering Time: 20:22");
-            plantItems.add(plant_one);
+            newPlants.add(plant);
         }
+
+        plantItems = newPlants;
 
     }
 
@@ -121,10 +138,8 @@ public class PlantList extends AppCompatActivity {
     public void addPlant(View view) {
         backtime = 0;
         Intent intent = new Intent(this, AddPlant.class);
-//        EditText editText = (EditText) findViewById(R.id.editText);
-//        String message = editText.getText().toString();
-//        intent.putExtra(PLANT_NAME, message);
-        startActivity(intent);
+        // RequestCode currently hardcoded. CHANGE LATER.
+        startActivityForResult(intent, 1);
     }
     @Override
     public boolean onSupportNavigateUp() {
@@ -144,22 +159,22 @@ public class PlantList extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.action_logout:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                Toast.makeText(getApplicationContext(),"hhhhhhhh", Toast.LENGTH_LONG).show();
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//
+//            case R.id.action_logout:
+//                // User chose the "Favorite" action, mark the current item
+//                // as a favorite...
+//                Toast.makeText(getApplicationContext(),"hhhhhhhh", Toast.LENGTH_LONG).show();
+//                return true;
+//
+//            default:
+//                // If we got here, the user's action was not recognized.
+//                // Invoke the superclass to handle it.
+//                return super.onOptionsItemSelected(item);
+//
+//        }
+//    }
 
 }

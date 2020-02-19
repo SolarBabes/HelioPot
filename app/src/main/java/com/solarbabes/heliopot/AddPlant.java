@@ -24,8 +24,8 @@ public class AddPlant extends AppCompatActivity {
         EditText plantName = (EditText) findViewById(R.id.editText_plantName);
         intent.putExtra("PLANT_NAME", plantName.getText().toString());
 
+        // This page is opened with the
         setResult(Activity.RESULT_OK, intent);
-
         finish();
     }
 
