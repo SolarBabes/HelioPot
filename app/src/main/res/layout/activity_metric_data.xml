@@ -28,25 +28,25 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_temperature"
                 android:layout_width="match_parent"
-                android:layout_height="140dp" />
+                android:layout_height="160dp" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_moisture"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="160dp"
 
                 />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_humidity"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="160dp"
                 />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_light"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="160dp"
                 />
 
 

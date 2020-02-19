@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,16 +40,54 @@ public class Login extends AppCompatActivity {
     private EditText Password;
     private Button Login;
     private static final String TAG = "login";
+    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.MESSAGE";
+    private int flag = 0;
+    private HashMap<String, String> userinfo = new HashMap<>();
+    private ValueEventListener Listener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                if (!userinfo.containsKey(postSnapshot.getKey())){
+                    userinfo.put(postSnapshot.getKey(),postSnapshot.child("password").getValue().toString());
+                }
+            }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.w("123", "loadPost:onCancelled", databaseError.toException());
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Write a message to the database
+        Name = (EditText)findViewById(R.id.username);
+        Password = (EditText)findViewById(R.id.password);
+        Login = (Button)findViewById(R.id.login);
+
+        final String username = load("username.txt");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user");
+
+        mDatabase.addValueEventListener(Listener);
+
+//        Toast.makeText(getApplicationContext(), "Not more than 99", Toast.LENGTH_SHORT).show();
+
+//        username=username.replaceAll("[^a-zA-Z0-9]","");
+
+
+        if (username!=null && !username.equals("")){
+            Name.setText(username);
+            Toast.makeText(getApplicationContext(),"Welcome Back!"+username, Toast.LENGTH_LONG).show();
+            gotoList(username);
+        }
+
+
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("solarbabesdb");
 //        myRef.setValue("Hello, World!");
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("bot/plant1/realtime");
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("bot/plant1/realtime");
 //        mDatabase.child("000").child("999").setValue("11").addOnSuccessListener(new OnSuccessListener<Void>(){
 //            @Override
 //            public void onSuccess(Void aVoid) {
@@ -60,80 +100,68 @@ public class Login extends AppCompatActivity {
 //            }
 //        });
 //        mDatabase.child("bot").child("1").child("light").child("20202051915").setValue("14");
-//        Random rand = new Random();
-//        long a = System.currentTimeMillis();
-//        for (int i = 0; i < 50; i++) {
-//            a=a-500000;
-//            mDatabase.child("bot").child("1").child("wateringtime").child(Long.toString(a)).setValue(Integer.toString(rand.nextInt(20)));
-//            mDatabase.child("bot").child("1").child("temperature").child(Long.toString(a)).setValue(Integer.toString(rand.nextInt(20)));
-//        }
-        Log.d("123",mDatabase.child("pots").child("666").getKey());
-
-
-
-        ValueEventListener Listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-//                Log.d("123"," "+dataSnapshot.getKey());
-//                Log.d("123",dataSnapshot.getRef().toString());
-                Log.d("123",dataSnapshot.getValue().toString());
-//                Map<String, Integer> map = (Map<String, Integer>) dataSnapshot.getValue();
-//                Log.d("map",map.toString());
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("123", "loadPost:onCancelled", databaseError.toException());
-            }
-        };
+//        Log.d("123",mDatabase.child("pots").child("666").getKey());
 //        mDatabase.addValueEventListener(Listener);
-
-
-
-
-
-
-
-
-
-
-
-
-        Name = (EditText)findViewById(R.id.username);
-        Password = (EditText)findViewById(R.id.password);
-        Login = (Button)findViewById(R.id.login);
-
-        String username = load("username.txt");
-
-
-        if (username!=null && !username.equals("")){
-//            Log.v(TAG, username);
-            Name.setText(username);
-            Intent intent = new Intent(this, PlantList.class);
-            Toast.makeText(getApplicationContext(),"Welcome Back!"+username, Toast.LENGTH_LONG).show();
-            startActivity(intent);
-            finish();
-        }
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validate(Name.getText().toString(), Password.getText().toString());
+                Name.setText(Name.getText().toString().replace(System.lineSeparator(),""));
+                Password.setText(Password.getText().toString().replace(System.lineSeparator(),""));
+                if (Name.getText().toString().matches(".*[^0-9a-zA-Z].*")){
+                    Toast.makeText(getApplicationContext(),"Sorry, username can only contains 0-9a-zA-Z", Toast.LENGTH_LONG).show();
+                    Name.setText("");
+                }else if(Password.getText().toString().matches(".*[^0-9a-zA-Z].*")){
+                    Toast.makeText(getApplicationContext(),"Sorry, password can only contains 0-9a-zA-Z", Toast.LENGTH_LONG).show();
+                    Password.setText("");
+                }else{
+                    validate(Name.getText().toString(), Password.getText().toString());
+                }
             }
         });
     }
 
+    private void gotoList(String username){
+        Intent intent = new Intent(this, PlantList.class);
+        String message = username;
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+        finish();
+    }
 
 
-    private void validate(String userName, String userPassword){
-        if((userName.equals("Admin")) && (userPassword.equals("1234"))||((!userName.equals(""))&&userName.equals(userPassword))){
-            Intent intent = new Intent(this, PlantList.class);
-            save("username.txt", userName);
 
-//            Toast.makeText(getApplicationContext(), load("username.txt"), Toast.LENGTH_LONG).show();
-            startActivity(intent);
-            finish();
+    private boolean checkFirebase(String username, String password){
+        while (username.length()==0){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if (userinfo.containsKey(username)){
+            if (password.equals(userinfo.get(username))){
+                return true;
+            }else{
+                Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }else{
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user");
+            mDatabase.child(username).child("password").setValue(password);
+            Toast.makeText(getApplicationContext(), "Register succeed", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    }
+
+    private void validate(String username, String userPassword){
+        username=username.replaceAll("[^a-zA-Z0-9]","");
+        if(checkFirebase(username, userPassword)){
+
+            save("username.txt", username);
+            gotoList(username);
+
+
         }else{
             Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
         }
@@ -142,7 +170,7 @@ public class Login extends AppCompatActivity {
 
 
     public void save(String name, String text) {
-//        String text = mEditText.getText().toString();
+        //        String text = mEditText.getText().toString();
 
         FileOutputStream fos = null;
 

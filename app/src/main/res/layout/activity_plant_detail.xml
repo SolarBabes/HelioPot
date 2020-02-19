@@ -408,6 +408,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
@@ -416,109 +417,63 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="3dp"
-                    android:layout_marginRight="3dp"
                     android:text="Watering Times"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.092"
+                    app:layout_constraintHorizontal_bias="0.09"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout5"
-                    android:layout_width="133dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:onClick="goToWateringSchedule"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView16"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/imageView13"
-                        android:layout_width="47dp"
-                        android:layout_height="41dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/more" />
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Set time"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView13"
-                        app:layout_constraintHorizontal_bias="0.52"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
                 <TextView
-                    android:id="@+id/textView18"
+                    android:id="@+id/FirstWateringTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="16dp"
-                    android:text="12.01.2020 16:00"
+                    android:layout_marginStart="36dp"
+                    android:text="Loading"
                     android:textColor="@color/darkgreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/textView19"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                    app:layout_constraintTop_toTopOf="@+id/textView19" />
 
                 <TextView
-                    android:id="@+id/textView26"
+                    android:id="@+id/SecondWateringTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="12.01.2020 16:15"
+                    android:text="Loading"
                     android:textColor="@color/darkgreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView18"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+                    app:layout_constraintStart_toStartOf="@+id/FirstWateringTime"
+                    app:layout_constraintTop_toBottomOf="@+id/FirstWateringTime" />
 
                 <TextView
-                    android:id="@+id/textView28"
+                    android:id="@+id/ThirdWateringTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="12.01.2020 16:30"
+                    android:text="Loading"
                     android:textColor="@color/darkgreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView26"
-                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                    app:layout_constraintStart_toStartOf="@+id/SecondWateringTime"
+                    app:layout_constraintTop_toBottomOf="@+id/SecondWateringTime" />
 
                 <TextView
                     android:id="@+id/textView19"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:text="First"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView16"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                    app:layout_constraintStart_toStartOf="@+id/interval"
+                    app:layout_constraintTop_toBottomOf="@+id/interval" />
 
                 <TextView
                     android:id="@+id/textView25"
@@ -543,6 +498,44 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/textView25"
                     app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="110dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="47dp"
+                    android:text="set time manually"
+                    android:textColor="#737373"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.882"
+                    app:layout_constraintStart_toEndOf="@+id/textView16"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/sendButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="sendWateringTime"
+                    android:text="Confirm"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.492"
+                    app:layout_constraintStart_toEndOf="@+id/interval"
+                    app:layout_constraintTop_toTopOf="@+id/interval" />
+
+                <EditText
+                    android:id="@+id/interval"
+                    android:layout_width="156dp"
+                    android:layout_height="38dp"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="Interval (mins)"
+                    app:layout_constraintStart_toStartOf="@+id/textView16"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16"
+                    android:inputType="number"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

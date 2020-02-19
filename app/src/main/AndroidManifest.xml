@@ -9,8 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".PlantDetail"/>
+        <activity android:name=".PlantDetail" />
         <activity
             android:name=".AddPlant"
             android:parentActivityName=".PlantList" />
@@ -40,7 +39,7 @@
             android:parentActivityName=".PlantDetail" />
         <activity
             android:name=".Main2Activity"
-            android:parentActivityName=".PlantList"></activity>
+            android:parentActivityName=".PlantList" />
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".PlantList" />

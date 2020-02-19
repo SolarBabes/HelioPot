@@ -1,57 +1,84 @@
 package com.solarbabes.heliopot;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+//import androidx.navigation.NavController;
+//import androidx.navigation.Navigation;
+
 
 public class PlantList extends AppCompatActivity {
 
-    public static ListView plantList;
-    public static ArrayList<PlantListItem> plantItems = new ArrayList<>();
-    public static PlantListAdapter plantListAdapter;
-    public static ArrayList<String> plantNames = new ArrayList<>();
+    ListView plantList;
+    ArrayList<PlantListItem> plantItems = new ArrayList<PlantListItem>();
+    PlantListAdapter plantListAdapter;
+    ArrayList<String> plantName = new ArrayList<String>();
+    private DatabaseReference mDatabase;
+    ValueEventListener Listener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            for (DataSnapshot postSnapshot: dataSnapshot.child("plant").getChildren()) {
+                Log.e("Get Data", postSnapshot.child("name").getValue().toString());
+                String name = postSnapshot.child("name").getValue().toString();
+                if (!plantName.contains(name)){
+                    plantName.add(name);
+                }
+                setListAdapter();
+            }
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.w("123", "loadPost:onCancelled", databaseError.toException());
+        }
+    };
 
     private static int backtime = 0;
+    public static String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plant_list);
         backtime = 0;
+        setContentView(R.layout.activity_plant_list);
 
-        // Filling the list of plants with some initial plants.
-        // onCreate is also called when the back button is clicked in the app. This if block
-        // then ensures we only add them when the list is first created.
-        if (plantItems.size() == 0) {
-            plantNames.add("plant1");
-            plantNames.add("plant2");
-            plantNames.add("plant3");
-            plantNames.add("plant4");
-            plantNames.add("plant5");
-            plantNames.add("plant6");
-            plantNames.add("plant7");
-            plantNames.add("plant8");
-            plantNames.add("plant9");
-            plantNames.add("plant10");
-            plantNames.add("plan11");
 
-            fillArrayList();
-        }
 
-        // Setting the adapter for the list.
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setHomeAsUpIndicator(R.drawable.logo);
+        Intent intent = getIntent();
+        username = intent.getStringExtra(Login.EXTRA_MESSAGE);
+        username=username.replaceAll("[^a-zA-Z0-9]","");
+        Log.d("username",username);
+        Log.d("username",Integer.toString(username.length()));
+        mDatabase = FirebaseDatabase.getInstance().getReference("user/"+username);
+        mDatabase.addValueEventListener(Listener);
+
+//        plantName.add("plant1");
+
         plantList = (ListView) findViewById(R.id.listView_Plants);
-        plantListAdapter = new PlantListAdapter(getApplicationContext(), plantItems);
-        plantList.setAdapter(plantListAdapter);
 
-        // Allows the user to click the list elements.
+        setListAdapter();
+
+        // A click listener for the listView.
         plantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -59,30 +86,17 @@ public class PlantList extends AppCompatActivity {
             }
         });
     }
-
-    // A listener for new plants being passed back from the 'AddPlant' activity.
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                String plantName = data.getStringExtra("PLANT_NAME");
-                // Note most of the added plant is hardcoded for now.
-                PlantListItem newPlant = new PlantListItem(R.drawable.plant2, plantName,
-                        "Watering Time: 20:00");
-
-                plantItems.add(newPlant);
-                plantNames.add(plantName);
-                plantListAdapter.notifyDataSetChanged();
-            }
-        }
-    }
+    private void setListAdapter(){
+        //TODO here, if one plant is added, it invokes setAdapter to refresh it, but there is something wrong
+        // so when adding new plant, only action is change the online database
+        fillArrayList();
+        plantList.setAdapter(new PlantListAdapter(this, plantItems));
+    };
 
     private void fillArrayList() {
         // Manually add a plant to the list of plants here. It will be added to the listVIew.
 
-        for (String n:plantNames){
+        for (String n:plantName){
             PlantListItem plant_one = new PlantListItem(R.drawable.plant1,
                     n, "Watering Time: 20:22");
             plantItems.add(plant_one);
@@ -99,18 +113,18 @@ public class PlantList extends AppCompatActivity {
     public void goToPlantDetail(int position) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
-        intent.putExtra(PLANT_NAME, plantNames.get(position));
+        intent.putExtra(PLANT_NAME, plantName.get(position));
         startActivity(intent);
     }
 
     // To be called when the + button is clicked.
-    // This method for starting an activity allows us to use the 'onActivityResult' listener,
-    // defined above.
     public void addPlant(View view) {
         backtime = 0;
         Intent intent = new Intent(this, AddPlant.class);
-        // RequestCode currently hardcoded. CHANGE LATER.
-        startActivityForResult(intent, 1);
+//        EditText editText = (EditText) findViewById(R.id.editText);
+//        String message = editText.getText().toString();
+//        intent.putExtra(PLANT_NAME, message);
+        startActivity(intent);
     }
     @Override
     public boolean onSupportNavigateUp() {
@@ -120,6 +134,7 @@ public class PlantList extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        mDatabase.removeEventListener(Listener);
         if (backtime==0){
             Toast.makeText(getApplicationContext(), "Press again to exit the APP", Toast.LENGTH_LONG).show();
             backtime ++;
@@ -128,4 +143,23 @@ public class PlantList extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_logout:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                Toast.makeText(getApplicationContext(),"hhhhhhhh", Toast.LENGTH_LONG).show();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
 }
