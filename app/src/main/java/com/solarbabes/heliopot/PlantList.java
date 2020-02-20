@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,9 +18,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 //import androidx.navigation.NavController;
 //import androidx.navigation.Navigation;
 
@@ -40,6 +47,21 @@ public class PlantList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         backtime = 0;
         setContentView(R.layout.activity_plant_list);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if ("logout".equals(item.getTitle())){
+                    Log.d("2323","5235");
+                }
+                return false;
+            }
+        });
+        setSupportActionBar(toolbar);
+
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setHomeAsUpIndicator(R.drawable.logo);
 
         // Username is passed in from Login Activity.
         // Retrieving plants stored for this username.
@@ -64,6 +86,14 @@ public class PlantList extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
+        return true;
+    }
+
 
     // Listener for database updates.
     ValueEventListener Listener = new ValueEventListener() {
@@ -167,22 +197,24 @@ public class PlantList extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//
-//            case R.id.action_logout:
-//                // User chose the "Favorite" action, mark the current item
-//                // as a favorite...
-//                Toast.makeText(getApplicationContext(),"hhhhhhhh", Toast.LENGTH_LONG).show();
-//                return true;
-//
-//            default:
-//                // If we got here, the user's action was not recognized.
-//                // Invoke the superclass to handle it.
-//                return super.onOptionsItemSelected(item);
-//
-//        }
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings){
+            File dir = getFilesDir();
+            File file = new File(dir,"username.txt");
+            if (file.delete()){
+                finish();
+                Toast.makeText(getApplicationContext(), "Logout succeed!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, Login.class);
+                startActivity(intent);
+
+            }else{
+                Toast.makeText(getApplicationContext(), "Logout failed!", Toast.LENGTH_LONG).show();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }
