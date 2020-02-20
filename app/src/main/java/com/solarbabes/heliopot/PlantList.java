@@ -130,7 +130,7 @@ public class PlantList extends AppCompatActivity {
 
 
 
-    public static final String PLANT_NAME = "com.solarbabes.heliopot.MESSAGE";
+    public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
 
     /** Called when the user taps the Send button */
     // CURRENTLY: If ANY plant is clicked - take to the SAME PlantDetail activity.
@@ -138,7 +138,7 @@ public class PlantList extends AppCompatActivity {
     public void goToPlantDetail(int position) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
-        intent.putExtra(PLANT_NAME, plantNames.get(position));
+        intent.putExtra(PLANT_NAME, "TEST");
         startActivity(intent);
     }
 

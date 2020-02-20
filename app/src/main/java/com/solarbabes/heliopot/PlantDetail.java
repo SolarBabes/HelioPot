@@ -39,6 +39,53 @@ public class PlantDetail extends AppCompatActivity {
     private TextView ThirdWateringTime;
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd-MM-yyyy");
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_plant_detail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // The activity is started with just the name given from the clicked item in the list.
+        // Using the name, we retrieve all stats.
+        Intent intent = getIntent();
+        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
+        // Gives us access to the stored data children.
+        mDatabase = FirebaseDatabase.getInstance().getReference("heliopots/helio1/data/realtime");
+//        mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName+"/realtime");
+        mDatabase.addListenerForSingleValueEvent(WateringListener);
+        mDatabase.addValueEventListener(Listener);
+
+        // Obtaining references to UI elements.
+        temperature_view = findViewById(R.id.textView_temperature);
+        humidity_view = findViewById(R.id.textView_humidity);
+        moisture_view = findViewById(R.id.textView_moisture);
+        light_view = findViewById(R.id.textView_light);
+        switch1 = (Switch) findViewById(R.id.switch1);
+        Interval = findViewById(R.id.interval);
+        send = findViewById(R.id.sendButton);
+        FirstWateringTime = findViewById(R.id.FirstWateringTime);
+        SecondWateringTime = findViewById(R.id.SecondWateringTime);
+        ThirdWateringTime = findViewById(R.id.ThirdWateringTime);
+
+        // Switching between manual and automatic watering time views.
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.d("switch",Boolean.toString(b));
+                if (b){
+                    send.setVisibility(View.VISIBLE);
+                    Interval.setVisibility(View.VISIBLE);
+                }else{
+                    send.setVisibility(View.GONE);
+                    Interval.setVisibility(View.GONE);
+                    mDatabase.child("interval").setValue(-1);
+                }
+
+            }
+        });
+    }
+
+    // Updates three sample watering times when a new interval is given.
     ValueEventListener WateringListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,6 +110,7 @@ public class PlantDetail extends AppCompatActivity {
             Log.w("123", "loadPost:onCancelled", databaseError.toException());
         }
     };
+
     ValueEventListener Listener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,46 +126,8 @@ public class PlantDetail extends AppCompatActivity {
             Log.w("123", "loadPost:onCancelled", databaseError.toException());
         }
     };
+
     private DatabaseReference mDatabase;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plant_detail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Intent intent = getIntent();
-        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
-        mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName+"/realtime");
-        mDatabase.addListenerForSingleValueEvent(WateringListener);
-        mDatabase.addValueEventListener(Listener);
-
-        temperature_view = findViewById(R.id.textView_temperature);
-        humidity_view = findViewById(R.id.textView_humidity);
-        moisture_view = findViewById(R.id.textView_moisture);
-        light_view = findViewById(R.id.textView_light);
-        switch1 = (Switch) findViewById(R.id.switch1);
-        Interval = findViewById(R.id.interval);
-        send = findViewById(R.id.sendButton);
-        FirstWateringTime = findViewById(R.id.FirstWateringTime);
-        SecondWateringTime = findViewById(R.id.SecondWateringTime);
-        ThirdWateringTime = findViewById(R.id.ThirdWateringTime);
-
-        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.d("switch",Boolean.toString(b));
-                if (b){
-                    send.setVisibility(View.VISIBLE);
-                    Interval.setVisibility(View.VISIBLE);
-                }else{
-                    send.setVisibility(View.GONE);
-                    Interval.setVisibility(View.GONE);
-                    mDatabase.child("interval").setValue(-1);
-                }
-
-            }
-        });
-    }
 
     public void sendWateringTime(View view){
         mDatabase.child("interval").setValue(Math.round(Float.parseFloat(Interval.getText().toString())*60));
@@ -125,8 +135,6 @@ public class PlantDetail extends AppCompatActivity {
         FirstWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*1000)));
         SecondWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*2000)));
         ThirdWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*3000)));
-        
-
     }
 
     /** Called when the user taps the Send button */
