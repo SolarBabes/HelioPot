@@ -65,13 +65,18 @@ public class PlantList extends AppCompatActivity {
 
         // Username is passed in from Login Activity.
         // Retrieving plants stored for this username.
+        // Check for null necessary because this activity can also be started from activities
+        // other than login. In that case - they don't have a username extra.
         Intent intent = getIntent();
-        username = intent.getStringExtra(Login.USERNAME);
-        username = username.replaceAll("[^a-zA-Z0-9]","");
-        mDatabase = FirebaseDatabase.getInstance().getReference("user/"+username);
+        if (intent.getStringExtra(Login.USERNAME) != null) {
+            Log.d("NULL_INTENT", "Intent was null");
+            username = intent.getStringExtra(Login.USERNAME);
+            username = username.replaceAll("[^a-zA-Z0-9]","");
+        }
 
         // A listener for database values updated.
         // Events dealt with by the overridden Listener below.
+        mDatabase = FirebaseDatabase.getInstance().getReference("user/"+username);
         mDatabase.addValueEventListener(Listener);
 
         // Populating list with retrieved plants (via adapter).
@@ -176,8 +181,7 @@ public class PlantList extends AppCompatActivity {
     public void addPlant(View view) {
         backtime = 0;
         Intent intent = new Intent(this, AddPlant.class);
-        // RequestCode currently hardcoded. CHANGE LATER.
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
     @Override
     public boolean onSupportNavigateUp() {
