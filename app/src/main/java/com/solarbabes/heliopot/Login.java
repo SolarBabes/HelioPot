@@ -68,6 +68,7 @@ public class Login extends AppCompatActivity {
         Login = (Button)findViewById(R.id.login);
 
         final String username = load("username.txt");
+
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user");
 
         mDatabase.addValueEventListener(Listener);

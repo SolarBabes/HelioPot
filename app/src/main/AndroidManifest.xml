@@ -33,7 +33,8 @@
         </activity>
         <activity
             android:name=".PlantList"
-            android:parentActivityName=".Login" />
+            android:parentActivityName=".Login"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MetricData"
             android:parentActivityName=".PlantDetail" />

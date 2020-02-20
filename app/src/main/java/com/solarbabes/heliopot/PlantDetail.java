@@ -125,7 +125,7 @@ public class PlantDetail extends AppCompatActivity {
         FirstWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*1000)));
         SecondWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*2000)));
         ThirdWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*3000)));
-        
+
 
     }
 
