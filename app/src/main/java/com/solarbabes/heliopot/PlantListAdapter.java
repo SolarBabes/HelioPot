@@ -1,7 +1,6 @@
 package com.solarbabes.heliopot;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,20 +40,18 @@ public class PlantListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Each plant item (row) will have an imageView and two textViews.
-        Log.d("position",Integer.toString(position));
-        if (convertView == null) {
-            convertView = thisInflater.inflate(R.layout.plant_list_item, parent, false);
 
-            TextView plantName = (TextView) convertView.findViewById(R.id.textView_Name);
-            TextView plantWateringTime = (TextView) convertView.findViewById(R.id.textView_WateringTime);
-            ImageView plantImage = (ImageView) convertView.findViewById(R.id.imageView_plant);
+        convertView = thisInflater.inflate(R.layout.plant_list_item, parent, false);
 
-            PlantListItem current = (PlantListItem) getItem(position);
+        TextView plantName = (TextView) convertView.findViewById(R.id.textView_Name);
+        TextView plantWateringTime = (TextView) convertView.findViewById(R.id.textView_WateringTime);
+        ImageView plantImage = (ImageView) convertView.findViewById(R.id.imageView_plant);
 
-            plantName.setText(current.getName());
-            plantWateringTime.setText(current.getWateringTime());
-            plantImage.setImageResource(current.getImageID());
-        }
+        PlantListItem current = (PlantListItem) getItem(position);
+
+        plantName.setText(current.getName());
+        plantWateringTime.setText(current.getWateringTime());
+        plantImage.setImageResource(current.getImageID());
 
         return convertView;
     }

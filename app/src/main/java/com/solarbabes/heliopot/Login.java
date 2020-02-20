@@ -1,21 +1,15 @@
 package com.solarbabes.heliopot;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class Login extends AppCompatActivity {
@@ -40,7 +33,7 @@ public class Login extends AppCompatActivity {
     private EditText Password;
     private Button Login;
     private static final String TAG = "login";
-    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.MESSAGE";
+    public static final String USERNAME = "com.solarbabes.heliopot.MESSAGE";
     private int flag = 0;
     private HashMap<String, String> userinfo = new HashMap<>();
     private ValueEventListener Listener = new ValueEventListener() {
@@ -125,7 +118,7 @@ public class Login extends AppCompatActivity {
     private void gotoList(String username){
         Intent intent = new Intent(this, PlantList.class);
         String message = username;
-        intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(USERNAME, message);
         startActivity(intent);
         finish();
     }
