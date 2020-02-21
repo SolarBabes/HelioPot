@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -79,8 +80,17 @@ public class AddPlant extends AppCompatActivity {
                 if (enteredHelioID.equals(helioID) && enteredPassword.equals(password)) {
                     Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
 
-                    // Add heliopot to this user and go back to plant list.
+                    // Add heliopot ID to this user.
+                    //TODO username is currently hardcoded. Pass from previous activity.
+                    //TODO only add the ID if it isn't already added.
+                    DatabaseReference user = FirebaseDatabase.getInstance().getReference("user/Billy");
+                    // Creates child if it doesn't exist.
+                    // Push creates a new child with a random key.
+                    user.child("ownedPots").push().setValue(helioID);
 
+                    Intent intent = new Intent(this, PlantList.class);
+
+                    startActivity(intent);
                 }
             }
             // No correct ID & PW match found.
