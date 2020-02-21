@@ -3,16 +3,19 @@ package com.solarbabes.heliopot;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.sip.SipSession;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,17 +23,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Map;
 
 public class MetricData extends AppCompatActivity {
     private static String plantName;
     private static String[] allMeasurements = {"temperature", "moisture", "humidity", "light"};
-//    private ArrayList<Entry> dataVals = new ArrayList<Entry>();
     private LineChart[] mpLineChart = new LineChart[4];
-//    ArrayList<Entry>[] dataVals = new ArrayList[4];
     private Comparator<Entry> c = new Comparator<Entry>(){
         @Override
         public int compare(Entry t1, Entry t2) {
@@ -40,6 +43,7 @@ public class MetricData extends AppCompatActivity {
             }
         }
     };
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss ddMMM");
     private DatabaseReference mDatabase;
     ValueEventListener Listener = new ValueEventListener() {
         @Override
@@ -49,7 +53,6 @@ public class MetricData extends AppCompatActivity {
                 Map<String, Long> map = (Map<String, Long>) dataSnapshot.child(allMeasurements[i]).getValue();
                 ArrayList<Entry> dataVals = new ArrayList<Entry>();
                 for (String s:map.keySet()){
-//                        Log.d(allMeasurements[i],s+" "+Long.toString(map.get(s)));
                     dataVals.add(new Entry(Long.parseLong(s)-1580000000L,map.get(s)));
                 }
                 Collections.sort(dataVals,c);
@@ -92,7 +95,21 @@ public class MetricData extends AppCompatActivity {
             Legend legend = mpLineChart[i].getLegend();
             legend.setEnabled(false);
             mpLineChart[i].setDescription(description);
+            mpLineChart[i].setNoDataText("NO DATA");
 
+            XAxis xAxis = mpLineChart[i].getXAxis();
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setTextSize(10f);
+            xAxis.setTextColor(Color.BLACK);
+            xAxis.setDrawAxisLine(true);
+            xAxis.setDrawGridLines(true);
+            xAxis.setValueFormatter(new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    Date resultdate = new Date(Math.round(value)+1580000000L);
+                    return (sdf.format(resultdate));
+                }
+            });
         }
         mpLineChart[0].setTouchEnabled(false);
 //        mpLineChart[1].setScaleEnabled(false);

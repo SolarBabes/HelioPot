@@ -35,7 +35,7 @@ public class PlantList extends AppCompatActivity {
     ListView plantList;
     ArrayList<PlantListItem> plantItems = new ArrayList<>();
     PlantListAdapter plantListAdapter;
-    ArrayList<String> plantNames = new ArrayList<String>();
+    ArrayList<String> plantNames = new ArrayList<String>();  // TODO may useless since we can use plantItems.get(position).getName()
     private DatabaseReference mDatabase;
 
     private static int backtime = 0;
@@ -168,7 +168,8 @@ public class PlantList extends AppCompatActivity {
     public void goToPlantDetail(int position) {
         backtime = 0;
         Intent intent = new Intent(getApplicationContext(), PlantDetail.class);
-        intent.putExtra(PLANT_NAME, plantNames.get(position));
+//        intent.putExtra(PLANT_NAME, plantNames.get(position));
+        intent.putExtra(PLANT_NAME, plantItems.get(position).getName());
         startActivity(intent);
     }
 

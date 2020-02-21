@@ -2,6 +2,7 @@ package com.solarbabes.heliopot;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,8 @@ public class PlantExtraInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_extra_info);
+        Intent intent = getIntent();
+        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
 
         if (plantName != null) {
             EditText plantNameBox = (EditText) findViewById(R.id.plantName);
@@ -27,6 +30,8 @@ public class PlantExtraInfo extends AppCompatActivity {
             plantNameBox.setText(plantName);
             plantNotesBox.setText(plantNotes);
         }
+
+
     }
 
     @Override

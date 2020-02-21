@@ -14,12 +14,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -57,6 +59,24 @@ public class Main2Activity extends AppCompatActivity {
 //        mpLineChart.setNoDataText("NO DATA");
 
 //        LineData data = new LineData(dataSets);
+
+        XAxis xAxis = mpLineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(10f);
+        xAxis.setTextColor(Color.BLACK);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(true);
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return (Float.toString(value+100));
+            }
+        });
+
+
+
+
+
         mpLineChart.setData(new LineData(dataSets));
         mpLineChart.invalidate();
         Log.d("draw","1");
