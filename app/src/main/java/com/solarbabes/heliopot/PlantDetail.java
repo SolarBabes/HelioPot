@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class PlantDetail extends AppCompatActivity {
     private static String plantName;
-    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.MESSAGE";
+    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.PLANT_NAME";
     // TODO delete static
     private static TextView temperature_view ;
     private static TextView humidity_view ;
@@ -142,6 +142,7 @@ public class PlantDetail extends AppCompatActivity {
         Intent intent = new Intent(this, MetricData.class);
         String message = plantName;
         intent.putExtra(EXTRA_MESSAGE, message);
+        Log.d("detail go to metric",message);
         startActivity(intent);
     }
 
