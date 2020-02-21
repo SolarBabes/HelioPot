@@ -3,6 +3,7 @@ package com.solarbabes.heliopot;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 //import androidx.navigation.NavController;
@@ -34,9 +36,9 @@ public class PlantList extends AppCompatActivity {
 
     ListView plantList;
     ArrayList<PlantListItem> plantItems = new ArrayList<>();
-    PlantListAdapter plantListAdapter;
-    ArrayList<String> plantNames = new ArrayList<String>();  // TODO may useless since we can use plantItems.get(position).getName()
+    ArrayList<String> ownedPlants = new ArrayList<>();
     private DatabaseReference mDatabase;
+    private DatabaseReference userRef; // USED FOR GETTING OWNED IDs.
 
     private static int backtime = 0;
     public static String username;
@@ -79,9 +81,12 @@ public class PlantList extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("heliopots");
         mDatabase.addValueEventListener(Listener);
 
+        // A listener for new heliopot IDs added to the user account.
+        userRef = FirebaseDatabase.getInstance().getReference("user/" + username);
+        userRef.addValueEventListener(IDListener);
+
         // Populating list with retrieved plants (via adapter).
         plantList = (ListView) findViewById(R.id.listView_Plants);
-//        updatePlants();
 
         // A listener for clicking items in the list.
         plantList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,14 +112,8 @@ public class PlantList extends AppCompatActivity {
         public void onDataChange(DataSnapshot dataSnapshot) {
 
             updatePlants(dataSnapshot);
+            updateList();
 
-//            for (DataSnapshot plant : dataSnapshot.child("plants").getChildren()) {
-//                String name = plant.child("name").getValue().toString();
-//                if (!plantNames.contains(name)){
-//                    plantNames.add(name);
-//                }
-//                updatePlants();
-//            }
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
@@ -122,6 +121,37 @@ public class PlantList extends AppCompatActivity {
         }
     };
 
+    ValueEventListener IDListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            ArrayList<String> IDs = new ArrayList<>();
+            DataSnapshot IDRoot = dataSnapshot.child("ownedPots");
+
+            for (DataSnapshot ID : IDRoot.getChildren()) {
+                IDs.add(ID.getValue().toString());
+            }
+            ownedPlants = IDs;
+
+            updateList();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {}
+    };
+
+    private void updateList() {
+        ArrayList<PlantListItem> plantsToShow = new ArrayList<>();
+
+        for (String ID : ownedPlants) {
+            for (PlantListItem plant : plantItems) {
+                if (plant.getID().equals(ID)) {
+                    plantsToShow.add(plant);
+                }
+            }
+        }
+
+        plantList.setAdapter(new PlantListAdapter(this, plantsToShow));
+    }
 
     private void updatePlants(DataSnapshot update){
         //TODO here, if one plant is added, it invokes setAdapter to refresh it, but there is something wrong
@@ -130,8 +160,6 @@ public class PlantList extends AppCompatActivity {
         // Filling the list with new plants retrieved from the database.
         // Each time a change is detected, the list is completely remade.
 
-        Log.d("PLANT_ADDED", update.toString());
-
         plantItems = new ArrayList<>();
 
         for (DataSnapshot heliopot : update.getChildren()) {
@@ -139,33 +167,10 @@ public class PlantList extends AppCompatActivity {
             int picID = R.drawable.plant1;
             String wateringTime = "Watering Time: 20:22";
             String name = heliopot.child("name").getValue().toString();
-            plantItems.add(new PlantListItem(picID, name, wateringTime));
+            String ID = heliopot.child("id").getValue().toString();
+            plantItems.add(new PlantListItem(ID, picID, name, wateringTime));
         }
-
-        plantList.setAdapter(new PlantListAdapter(this, plantItems));
     };
-
-    // A listener for new plants being passed back from the 'AddPlant' activity.
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                String p = data.getStringExtra("PLANT_NAME");
-                // Note most of the added plant is hardcoded for now.
-                PlantListItem newPlant = new PlantListItem(R.drawable.plant2, p,
-                        "Watering Time: 20:00");
-
-                plantItems.add(newPlant);
-                plantNames.add(p);
-                plantListAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-
-
 
     public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
 

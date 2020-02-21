@@ -8,11 +8,13 @@ public class PlantListItem {
     private int imageID;
     private String name;
     private String wateringTime;
+    private String ID;
 
-    public PlantListItem(int imageID, String name, String wateringTime) {
+    public PlantListItem(String ID, int imageID, String name, String wateringTime) {
         this.imageID = imageID;
         this.name = name;
         this.wateringTime = wateringTime;
+        this.ID = ID;
     }
 
     public int getImageID() {
@@ -26,4 +28,6 @@ public class PlantListItem {
     public String getWateringTime() {
         return wateringTime;
     }
+
+    public String getID() { return ID; }
 }
