@@ -76,7 +76,7 @@ public class PlantList extends AppCompatActivity {
 
         // A listener for database values updated.
         // Events dealt with by the overridden Listener below.
-        mDatabase = FirebaseDatabase.getInstance().getReference("user/"+username);
+        mDatabase = FirebaseDatabase.getInstance().getReference("heliopots");
         mDatabase.addValueEventListener(Listener);
 
         // Populating list with retrieved plants (via adapter).
@@ -130,13 +130,15 @@ public class PlantList extends AppCompatActivity {
         // Filling the list with new plants retrieved from the database.
         // Each time a change is detected, the list is completely remade.
 
+        Log.d("PLANT_ADDED", update.toString());
+
         plantItems = new ArrayList<>();
 
-        for (DataSnapshot plant : update.child("plants").getChildren()) {
+        for (DataSnapshot heliopot : update.getChildren()) {
             //TODO Add real values to retrieve from server for picID & watering time.
             int picID = R.drawable.plant1;
             String wateringTime = "Watering Time: 20:22";
-            String name = plant.child("name").getValue().toString();
+            String name = heliopot.child("name").getValue().toString();
             plantItems.add(new PlantListItem(picID, name, wateringTime));
         }
 
