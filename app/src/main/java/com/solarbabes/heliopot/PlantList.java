@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import org.w3c.dom.Text;
 //import androidx.navigation.NavController;
 //import androidx.navigation.Navigation;
 
@@ -148,6 +151,14 @@ public class PlantList extends AppCompatActivity {
                     plantsToShow.add(plant);
                 }
             }
+        }
+
+        TextView emptyList = (TextView) findViewById(R.id.textView_Empty_PlantList);
+        if (plantsToShow.size() == 0) {
+            emptyList.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyList.setVisibility(View.GONE);
         }
 
         plantList.setAdapter(new PlantListAdapter(this, plantsToShow));
