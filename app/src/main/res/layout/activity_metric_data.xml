@@ -2,49 +2,58 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MetricData">
 
     <LinearLayout
         android:id="@+id/linear10"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:theme="@style/submit"
-            android:id="@+id/button"
+            android:id="@+id/button3"
+            style="@style/unchoose"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:onClick="onClick3"
+            android:text="2 days"
+            android:theme="@style/submit" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/unchoose"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:onClick="onClick4"
+            android:text="1 day"
+            android:theme="@style/submit" />
+
+        <Button
+            android:id="@+id/button5"
+            style="@style/unchoose"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:onClick="onClick5"
+            android:text="12 hours"
+            android:theme="@style/submit" />
+
+        <Button
+            android:id="@+id/button6"
+            style="@style/unchoose"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="2 days" />
-
-        <Button
-            android:theme="@style/submit"
-            android:id="@+id/button4"
-            android:layout_width="106dp"
-            android:layout_height="match_parent"
-            android:text="1 day" />
-
-        <Button
-            android:theme="@style/submit"
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12 hours" />
-
-        <Button
-            android:theme="@style/submit"
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1 hour" />
+            android:onClick="onClick6"
+            android:text="1 hour"
+            android:theme="@style/submit" />
 
     </LinearLayout>
 
@@ -68,10 +77,24 @@
             android:orientation="vertical">
 
 
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/titleForGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Temperature" />
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_temperature"
                 android:layout_width="match_parent"
                 android:layout_height="160dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/titleForGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Moisture" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_moisture"
@@ -80,10 +103,24 @@
 
                 />
 
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/titleForGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Humidity" />
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_humidity"
                 android:layout_width="match_parent"
                 android:layout_height="160dp" />
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/titleForGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Light" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_light"

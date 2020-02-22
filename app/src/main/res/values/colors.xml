@@ -6,4 +6,6 @@
     <color name="palegreen">#A9D69B</color>
     <color name="darkgreen">#698C59</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="backgrey">#D6D7D7</color>
 </resources>

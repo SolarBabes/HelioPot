@@ -25,11 +25,13 @@ import java.util.Map;
 public class PlantDetail extends AppCompatActivity {
     private static String plantName;
     public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.PLANT_NAME";
+    public static final String PLANT_ID = "com.solarbabes.heliopot.PLANT_ID";
     // TODO delete static
     private static TextView temperature_view ;
     private static TextView humidity_view ;
     private static TextView moisture_view ;
     private static TextView light_view ;
+    private String plantId;
     private Switch switch1 ;
     private EditText Interval;
     private Button send;
@@ -48,9 +50,10 @@ public class PlantDetail extends AppCompatActivity {
         // The activity is started with just the name given from the clicked item in the list.
         // Using the name, we retrieve all stats.
         Intent intent = getIntent();
-        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
+//        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
+        plantId = intent.getStringExtra(PlantList.PLANT_ID);
         // Gives us access to the stored data children.
-        mDatabase = FirebaseDatabase.getInstance().getReference("heliopots/helio1/data/realtime");
+        mDatabase = FirebaseDatabase.getInstance().getReference("heliopots/"+plantId+"/data/realtime");
 //        mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName+"/realtime");
         mDatabase.addListenerForSingleValueEvent(WateringListener);
         mDatabase.addValueEventListener(Listener);
@@ -141,8 +144,8 @@ public class PlantDetail extends AppCompatActivity {
     /** Called when the user taps the Send button */
     public void goToMetric(View view) {
         Intent intent = new Intent(this, MetricData.class);
-        String message = plantName;
-        intent.putExtra(EXTRA_MESSAGE, message);
+        String message = plantId;
+        intent.putExtra(PLANT_ID, message);
         Log.d("detail go to metric",message);
         startActivity(intent);
     }
