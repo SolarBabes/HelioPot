@@ -1,5 +1,7 @@
 package com.solarbabes.heliopot;
 
+import androidx.annotation.NonNull;
+
 public class PlantListItem {
 
     // Images are referenced by their ID numbers.
@@ -30,4 +32,10 @@ public class PlantListItem {
     }
 
     public String getID() { return ID; }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name+" "+ID+" "+wateringTime;
+    }
 }

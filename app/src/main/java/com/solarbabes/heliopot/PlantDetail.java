@@ -130,6 +130,7 @@ public class PlantDetail extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     public void sendWateringTime(View view){
+        interval = Integer.parseInt(Interval.getText().toString())*60;
         mDatabase.child("interval").setValue(Math.round(Float.parseFloat(Interval.getText().toString())*60));
         mDatabase.child("settingtime").setValue(System.currentTimeMillis()/1000);
         FirstWateringTime.setText(sdf.format(new Date(System.currentTimeMillis()+interval*1000)));

@@ -53,15 +53,15 @@ public class PlantList extends AppCompatActivity {
         backtime = 0;
         setContentView(R.layout.activity_plant_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if ("logout".equals(item.getTitle())){
-                    Log.d("2323","5235");
-                }
-                return false;
-            }
-        });
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                if ("logout".equals(item.getTitle())){
+//                    Log.d("2323","5235");
+//                }
+//                return false;
+//            }
+//        });
         setSupportActionBar(toolbar);
 
 //        ActionBar actionBar = getSupportActionBar();
@@ -79,14 +79,14 @@ public class PlantList extends AppCompatActivity {
             username = username.replaceAll("[^a-zA-Z0-9]","");
         }
 
+        // A listener for new heliopot IDs added to the user account.
+        userRef = FirebaseDatabase.getInstance().getReference("user/" + username);
+        userRef.addValueEventListener(IDListener);
+
         // A listener for database values updated.
         // Events dealt with by the overridden Listener below.
         mDatabase = FirebaseDatabase.getInstance().getReference("heliopots");
         mDatabase.addValueEventListener(Listener);
-
-        // A listener for new heliopot IDs added to the user account.
-        userRef = FirebaseDatabase.getInstance().getReference("user/" + username);
-        userRef.addValueEventListener(IDListener);
 
         // Populating list with retrieved plants (via adapter).
         plantList = (ListView) findViewById(R.id.listView_Plants);
