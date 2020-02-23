@@ -110,7 +110,8 @@ public class MetricData extends AppCompatActivity {
 
             XAxis xAxis = mpLineChart[i].getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTextSize(10f);
+            xAxis.setTextSize(8f);
+            xAxis.setLabelCount(4,true);
             xAxis.setTextColor(Color.BLACK);
             xAxis.setDrawAxisLine(true);
             xAxis.setDrawGridLines(true);
