@@ -47,12 +47,12 @@
 
         <Button
             android:id="@+id/button6"
-            style="@style/unchoose"
+            style="@style/choose"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="onClick6"
-            android:text="1 hour"
+            android:text="Real Time"
             android:theme="@style/submit" />
 
     </LinearLayout>
@@ -87,7 +87,7 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_temperature"
                 android:layout_width="match_parent"
-                android:layout_height="160dp" />
+                android:layout_height="200dp" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -99,7 +99,7 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_moisture"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="200dp"
 
                 />
 
@@ -113,7 +113,7 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_humidity"
                 android:layout_width="match_parent"
-                android:layout_height="160dp" />
+                android:layout_height="200dp" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -125,7 +125,7 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_light"
                 android:layout_width="match_parent"
-                android:layout_height="160dp" />
+                android:layout_height="200dp" />
 
 
         </LinearLayout>
