@@ -32,6 +32,9 @@ public class Login extends AppCompatActivity {
     private EditText Name;
     private EditText Password;
     private Button Login;
+    private Button Register;
+    private String username="";
+    private String password="";
     private static final String TAG = "login";
     public static final String USERNAME = "com.solarbabes.heliopot.MESSAGE";
     private int flag = 0;
@@ -59,8 +62,8 @@ public class Login extends AppCompatActivity {
         Name = (EditText)findViewById(R.id.username);
         Password = (EditText)findViewById(R.id.password);
         Login = (Button)findViewById(R.id.login);
-
-        final String username = load("username.txt");
+        Register = (Button) findViewById(R.id.register);
+        username = load("username.txt");
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user");
 
@@ -102,14 +105,35 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 Name.setText(Name.getText().toString().replace(System.lineSeparator(),""));
                 Password.setText(Password.getText().toString().replace(System.lineSeparator(),""));
-                if (Name.getText().toString().matches(".*[^0-9a-zA-Z].*")){
+                username = Name.getText().toString();
+                password = Password.getText().toString();
+                if (username.matches(".*[^0-9a-zA-Z].*")){
                     Toast.makeText(getApplicationContext(),"Sorry, username can only contains 0-9a-zA-Z", Toast.LENGTH_LONG).show();
                     Name.setText("");
-                }else if(Password.getText().toString().matches(".*[^0-9a-zA-Z].*")){
+                }else if(password.matches(".*[^0-9a-zA-Z].*")){
                     Toast.makeText(getApplicationContext(),"Sorry, password can only contains 0-9a-zA-Z", Toast.LENGTH_LONG).show();
                     Password.setText("");
                 }else{
-                    validate(Name.getText().toString(), Password.getText().toString());
+                    validate(username,password);
+                }
+            }
+        });
+
+        Register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Name.setText(Name.getText().toString().replace(System.lineSeparator(),""));
+                Password.setText(Password.getText().toString().replace(System.lineSeparator(),""));
+                username = Name.getText().toString();
+                password = Password.getText().toString();
+                if (userinfo.containsKey(username)){
+                    Toast.makeText(getApplicationContext(), Name.getText().toString()+" has been registered, pleanse sign in", Toast.LENGTH_SHORT).show();
+                }else{
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user");
+                    mDatabase.child(username).child("password").setValue(password);
+                    Toast.makeText(getApplicationContext(), "Register succeed", Toast.LENGTH_SHORT).show();
+                    save("username.txt", username);
+                    gotoList(username);
                 }
             }
         });
@@ -126,13 +150,15 @@ public class Login extends AppCompatActivity {
 
 
     private boolean checkFirebase(String username, String password){
-        while (username.length()==0){
+        while (userinfo.size()==0){
             try {
                 Thread.sleep(1000);
+                Toast.makeText(getApplicationContext(), "Bad internet", Toast.LENGTH_SHORT).show();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        Log.d("info",Boolean.toString(userinfo.containsKey(username)));//TODO if new user click sign in
         if (userinfo.containsKey(username)){
             if (password.equals(userinfo.get(username))){
                 return true;
@@ -141,21 +167,16 @@ public class Login extends AppCompatActivity {
                 return false;
             }
         }else{
-            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user");
-            mDatabase.child(username).child("password").setValue(password);
-            Toast.makeText(getApplicationContext(), "Register succeed", Toast.LENGTH_SHORT).show();
-            return true;
+            Toast.makeText(getApplicationContext(), "User does not exist, please register first.", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
     private void validate(String username, String userPassword){
         username=username.replaceAll("[^a-zA-Z0-9]","");
         if(checkFirebase(username, userPassword)){
-
             save("username.txt", username);
             gotoList(username);
-
-
         }else{
             Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_SHORT).show();
         }
