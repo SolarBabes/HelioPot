@@ -118,7 +118,7 @@ public class PlantDetail extends AppCompatActivity {
             Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
             temperature_view.setText(map.get("temperature").toString()+"°C");
             humidity_view.setText(map.get("humidity").toString()+"%");
-            moisture_view.setText(map.get("moisture").toString()+"%");
+            moisture_view.setText(map.get("moisture").toString());
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
