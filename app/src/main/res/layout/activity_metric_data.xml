@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:onClick="onClick3"
             android:text="2 days"
-            android:theme="@style/submit" />
+ />
 
         <Button
             android:id="@+id/button4"
@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:onClick="onClick4"
             android:text="1 day"
-            android:theme="@style/submit" />
+ />
 
         <Button
             android:id="@+id/button5"
@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:onClick="onClick5"
             android:text="12 hours"
-            android:theme="@style/submit" />
+ />
 
         <Button
             android:id="@+id/button6"
@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:onClick="onClick6"
             android:text="Real Time"
-            android:theme="@style/submit" />
+ />
 
     </LinearLayout>
 
@@ -115,17 +115,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-            <TextView
-                android:id="@+id/textView11"
-                style="@style/titleForGraph"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Light" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView11"-->
+<!--                style="@style/titleForGraph"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Light" />-->
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/line_chart_light"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
+<!--            <com.github.mikephil.charting.charts.LineChart-->
+<!--                android:id="@+id/line_chart_light"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="200dp" />-->
 
 
         </LinearLayout>

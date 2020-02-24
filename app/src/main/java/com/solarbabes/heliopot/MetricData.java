@@ -38,7 +38,7 @@ public class MetricData extends AppCompatActivity {
     private static String plantId;
     private static String[] allMeasurements = {"temperature", "moisture", "humidity", "light"};
     private static float[] yMin = {0,0,0,0};
-    private static float[] yMax = {30, 1000, 100, 1000};
+    private static float[] yMax = {40, 1000, 100, 1000};
     private LineChart[] mpLineChart = new LineChart[4];
     private Comparator<Entry> c = new Comparator<Entry>(){
         @Override
@@ -67,7 +67,7 @@ public class MetricData extends AppCompatActivity {
             if (mode!=4){
                 return;
             }
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 3; i++) {
                 Map<String, Long> map = (Map<String, Long>) dataSnapshot.child(allMeasurements[i]).getValue();
                 ArrayList<Entry> dataVals = new ArrayList<Entry>();
                 for (String s:map.keySet()){
@@ -123,7 +123,7 @@ public class MetricData extends AppCompatActivity {
         mpLineChart[0] = (LineChart) findViewById(R.id.line_chart_temperature);
         mpLineChart[1] = (LineChart) findViewById(R.id.line_chart_moisture);
         mpLineChart[2] = (LineChart) findViewById(R.id.line_chart_humidity);
-        mpLineChart[3] = (LineChart) findViewById(R.id.line_chart_light);
+//        mpLineChart[3] = (LineChart) findViewById(R.id.line_chart_light);
 
         Button3 = findViewById(R.id.button3);
         Button4 = findViewById(R.id.button4);
@@ -133,7 +133,7 @@ public class MetricData extends AppCompatActivity {
 
         Description description = new Description();
         description.setText("");
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             Legend legend = mpLineChart[i].getLegend();
             legend.setEnabled(false);
             mpLineChart[i].setDescription(description);
@@ -170,7 +170,7 @@ public class MetricData extends AppCompatActivity {
 
         mDatabase.addValueEventListener(Listener);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             ArrayList<Entry> dataVals = new ArrayList<Entry>();
             dataVals.add(new Entry(0,0));
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -184,14 +184,14 @@ public class MetricData extends AppCompatActivity {
     }
 
     public void onClick3(View view){
-
+        mode=1;
         Button3.setBackgroundResource(R.drawable.rounded_shape_palegreen);
         Button4.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button5.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button6.setBackgroundResource(R.drawable.rounded_shape_grey);
 
         Long firstTime = System.currentTimeMillis()/1000-timeLength[0];
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             ArrayList<Entry> dataValsNew;
             if (i==0){
                 dataValsNew = new ArrayList<Entry>(temperatureVal);
@@ -202,7 +202,7 @@ public class MetricData extends AppCompatActivity {
             }else{
                 dataValsNew = new ArrayList<Entry>(lightVal);
             }
-            while (dataValsNew.get(0).getX()+1580000000L<firstTime){
+            while (dataValsNew.size()>0 && dataValsNew.get(0).getX()+1580000000L<firstTime){
                 dataValsNew.remove(0);
             }
             double interval = dataValsNew.size()/30;
@@ -226,12 +226,13 @@ public class MetricData extends AppCompatActivity {
     }
 
     public void onClick4(View view){
+        mode=2;
         Button4.setBackgroundResource(R.drawable.rounded_shape_palegreen);
         Button3.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button5.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button6.setBackgroundResource(R.drawable.rounded_shape_grey);
         Long firstTime = System.currentTimeMillis()/1000-timeLength[1];
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             ArrayList<Entry> dataValsNew;
             if (i==0){
                 dataValsNew = new ArrayList<Entry>(temperatureVal);
@@ -242,7 +243,7 @@ public class MetricData extends AppCompatActivity {
             }else{
                 dataValsNew = new ArrayList<Entry>(lightVal);
             }
-            while (dataValsNew.get(0).getX()+1580000000L<firstTime){
+            while (dataValsNew.size()>0 && dataValsNew.get(0).getX()+1580000000L<firstTime){
                 dataValsNew.remove(0);
             }
             double interval = dataValsNew.size()/30;
@@ -266,12 +267,13 @@ public class MetricData extends AppCompatActivity {
     }
 
     public void onClick5(View view){
+        mode=3;
         Button5.setBackgroundResource(R.drawable.rounded_shape_palegreen);
         Button4.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button3.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button6.setBackgroundResource(R.drawable.rounded_shape_grey);
         Long firstTime = System.currentTimeMillis()/1000-timeLength[2];
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             ArrayList<Entry> dataValsNew;
             if (i==0){
                 dataValsNew = new ArrayList<Entry>(temperatureVal);
@@ -282,7 +284,7 @@ public class MetricData extends AppCompatActivity {
             }else{
                 dataValsNew = new ArrayList<Entry>(lightVal);
             }
-            while (dataValsNew.get(0).getX()+1580000000L<firstTime){
+            while (dataValsNew.size()>0 && dataValsNew.get(0).getX()+1580000000L<firstTime){
                 dataValsNew.remove(0);
             }
             double interval = dataValsNew.size()/30;
@@ -306,6 +308,7 @@ public class MetricData extends AppCompatActivity {
     }
 
     public void onClick6(View view){
+        mode=4;
         Button6.setBackgroundResource(R.drawable.rounded_shape_palegreen);
         Button4.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button5.setBackgroundResource(R.drawable.rounded_shape_grey);
