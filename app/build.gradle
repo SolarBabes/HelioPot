@@ -38,6 +38,8 @@ dependencies {
     implementation "com.android.support:support-core-utils:29.0.0"
     implementation 'com.android.support:appcompat-v7:29.0.0'
 
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 
 
 }

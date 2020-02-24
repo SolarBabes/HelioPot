@@ -22,7 +22,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.DigestException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+
+import java.security.MessageDigest;
 
 
 public class Login extends AppCompatActivity {
@@ -107,6 +112,10 @@ public class Login extends AppCompatActivity {
                 Password.setText(Password.getText().toString().replace(System.lineSeparator(),""));
                 username = Name.getText().toString();
                 password = Password.getText().toString();
+                password = hash(password);
+                Log.d("1",hash("billy"));
+                Log.d("2",hash("billy"));
+
                 if (username.matches(".*[^0-9a-zA-Z].*")){
                     Toast.makeText(getApplicationContext(),"Sorry, username can only contains 0-9a-zA-Z", Toast.LENGTH_LONG).show();
                     Name.setText("");
@@ -126,6 +135,7 @@ public class Login extends AppCompatActivity {
                 Password.setText(Password.getText().toString().replace(System.lineSeparator(),""));
                 username = Name.getText().toString();
                 password = Password.getText().toString();
+                password = hash(password);
                 if (userinfo.containsKey(username)){
                     Toast.makeText(getApplicationContext(), Name.getText().toString()+" has been registered, pleanse sign in", Toast.LENGTH_SHORT).show();
                 }else{
@@ -137,6 +147,23 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public String hash(String s){
+        try{
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(s.getBytes());
+            byte messageDigest[]= md.digest();
+
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0;i<messageDigest.length;i++){
+                hexString.append(Integer.toHexString(0xFF&messageDigest[i]));
+            }
+            return hexString.toString();
+        }catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private void gotoList(String username){
@@ -160,6 +187,9 @@ public class Login extends AppCompatActivity {
         }
         Log.d("info",Boolean.toString(userinfo.containsKey(username)));//TODO if new user click sign in
         if (userinfo.containsKey(username)){
+            Log.d("p1",password);
+            Log.d("p2",userinfo.get(username));
+
             if (password.equals(userinfo.get(username))){
                 return true;
             }else{
