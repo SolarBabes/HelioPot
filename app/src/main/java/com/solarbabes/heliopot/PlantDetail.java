@@ -30,7 +30,6 @@ public class PlantDetail extends AppCompatActivity {
     private static TextView temperature_view ;
     private static TextView humidity_view ;
     private static TextView moisture_view ;
-    private static TextView light_view ;
     private String plantId;
     private Switch switch1 ;
     private EditText Interval;
@@ -62,7 +61,6 @@ public class PlantDetail extends AppCompatActivity {
         temperature_view = findViewById(R.id.textView_temperature);
         humidity_view = findViewById(R.id.textView_humidity);
         moisture_view = findViewById(R.id.textView_moisture);
-        light_view = findViewById(R.id.textView_light);
         switch1 = (Switch) findViewById(R.id.switch1);
         Interval = findViewById(R.id.interval);
         send = findViewById(R.id.sendButton);
@@ -121,7 +119,6 @@ public class PlantDetail extends AppCompatActivity {
             temperature_view.setText(map.get("temperature").toString()+"°C");
             humidity_view.setText(map.get("humidity").toString()+"%");
             moisture_view.setText(map.get("moisture").toString()+"%");
-            light_view.setText(map.get("light").toString()+"lux");
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
