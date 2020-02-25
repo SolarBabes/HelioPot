@@ -196,6 +196,7 @@ public class PlantList extends AppCompatActivity {
 //        intent.putExtra(PLANT_NAME, plantNames.get(position));
 //        intent.putExtra(PLANT_NAME, plantItems.get(position).getName());//this works
         intent.putExtra(PLANT_ID, plantItems.get(position).getID());//this works
+        intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
 
@@ -203,6 +204,7 @@ public class PlantList extends AppCompatActivity {
     public void addPlant(View view) {
         backtime = 0;
         Intent intent = new Intent(this, AddPlant.class);
+        intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
     @Override

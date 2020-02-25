@@ -24,6 +24,7 @@ import java.util.Map;
 
 public class PlantDetail extends AppCompatActivity {
     private static String plantName;
+    private static String username;
     public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.PLANT_NAME";
     public static final String PLANT_ID = "com.solarbabes.heliopot.PLANT_ID";
     // TODO delete static
@@ -47,6 +48,7 @@ public class PlantDetail extends AppCompatActivity {
         Intent intent = getIntent();
 //        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
         plantId = intent.getStringExtra(PlantList.PLANT_ID);
+        username = intent.getStringExtra("USERNAME");
         // Gives us access to the stored data children.
         mDatabase = FirebaseDatabase.getInstance().getReference("heliopots/"+plantId+"/data/realtime");
 //        mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName+"/realtime");
@@ -89,6 +91,7 @@ public class PlantDetail extends AppCompatActivity {
         Intent intent = new Intent(this, PlantExtraInfo.class);
         String message = plantName;
         intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
 

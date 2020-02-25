@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class AddPlant extends AppCompatActivity {
 
+    private String username;
+
     // Path for available heliopots.
     private final String HELIOPOT_LOCATION = "heliopots";
 
@@ -31,6 +33,9 @@ public class AddPlant extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plant);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME");
 
         // Setting a listener for new heliopots.
         // Required so we can check ID and passwords.
@@ -81,9 +86,9 @@ public class AddPlant extends AppCompatActivity {
                     Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
 
                     // Add heliopot ID to this user.
-                    //TODO username is currently hardcoded. Pass from previous activity.
                     //TODO only add the ID if it isn't already added.
-                    DatabaseReference user = FirebaseDatabase.getInstance().getReference("user/Billy");
+                    DatabaseReference user
+                            = FirebaseDatabase.getInstance().getReference("user/" + username);
                     // Creates child if it doesn't exist.
                     // Push creates a new child with a random key.
                     user.child("ownedPots").push().setValue(helioID);
