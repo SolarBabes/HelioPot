@@ -77,6 +77,8 @@ public class AddPlant extends AppCompatActivity {
             //TODO Probably do this in a more secure way...
             // Currently all IDs & passwords are downloaded & stored locally, unencrypted.
 
+            boolean pairFound = false;
+
             // Check ID & PW are correct.
             for (DataSnapshot plant : heliopots) {
                 String helioID = plant.child("id").getValue().toString();
@@ -96,10 +98,15 @@ public class AddPlant extends AppCompatActivity {
                     Intent intent = new Intent(this, PlantList.class);
 
                     startActivity(intent);
+
+                    pairFound = true;
+                    break;
                 }
             }
-            // No correct ID & PW match found.
-            Toast.makeText(this, "Incorrect ID & PW Pair", Toast.LENGTH_LONG).show();
+            if (pairFound == false) {
+                // No correct ID & PW match found.
+                Toast.makeText(this, "Incorrect ID & PW Pair", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
