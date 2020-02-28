@@ -195,7 +195,7 @@ public class PlantList extends AppCompatActivity {
         //intent.putExtra(PLANT_NAME, "TEST");
 //        intent.putExtra(PLANT_NAME, plantNames.get(position));
 //        intent.putExtra(PLANT_NAME, plantItems.get(position).getName());//this works
-        intent.putExtra(PLANT_ID, plantItems.get(position).getID());//this works
+        intent.putExtra(PLANT_ID, ownedPlants.get(position));//this works
         intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
