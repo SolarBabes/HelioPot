@@ -64,6 +64,7 @@ public class AddPlant extends AppCompatActivity {
     public void onSubmitButtonPress(View view) {
         EditText helioIDView = (EditText) findViewById(R.id.editText_helioPotID);
         EditText passwordView = (EditText) findViewById(R.id.editText_password);
+        EditText newPlantName = (EditText) findViewById(R.id.editText_plantName);
 
         String enteredHelioID = helioIDView.getText().toString();
         String enteredPassword = passwordView.getText().toString();
@@ -89,11 +90,11 @@ public class AddPlant extends AppCompatActivity {
 
                     // Add heliopot ID to this user.
                     //TODO only add the ID if it isn't already added.
-                    DatabaseReference user
-                            = FirebaseDatabase.getInstance().getReference("user/" + username);
+                    FirebaseDatabase.getInstance().getReference("user/" + username).child("ownedPots").push().setValue(helioID);
                     // Creates child if it doesn't exist.
                     // Push creates a new child with a random key.
-                    user.child("ownedPots").push().setValue(helioID);
+//                    user.child("ownedPots").push().setValue(helioID);
+                    FirebaseDatabase.getInstance().getReference("heliopots/" + helioID).child("name").setValue(newPlantName.getText().toString());
 
                     Intent intent = new Intent(this, PlantList.class);
 
