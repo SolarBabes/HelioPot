@@ -205,6 +205,7 @@ public class PlantList extends AppCompatActivity {
         backtime = 0;
         Intent intent = new Intent(this, AddPlant.class);
         intent.putExtra("USERNAME", username);
+        intent.putStringArrayListExtra("IDs", ownedPlants);
         startActivity(intent);
     }
     @Override

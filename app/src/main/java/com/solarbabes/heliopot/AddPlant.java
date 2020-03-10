@@ -24,6 +24,7 @@ public class AddPlant extends AppCompatActivity {
 
     // Path for available heliopots.
     private final String HELIOPOT_LOCATION = "heliopots";
+    private ArrayList<String> IDs = new ArrayList<>();
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(HELIOPOT_LOCATION);
     // Storing each plant as a DataSnaphot.
@@ -36,6 +37,7 @@ public class AddPlant extends AppCompatActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra("USERNAME");
+        IDs = intent.getExtras().getStringArrayList("IDs");
 
         // Setting a listener for new heliopots.
         // Required so we can check ID and passwords.
@@ -73,6 +75,8 @@ public class AddPlant extends AppCompatActivity {
         //TODO more checking.
         if (enteredHelioID.isEmpty() || enteredPassword.isEmpty()) {
             Toast.makeText(this, "Fill user & pw", Toast.LENGTH_LONG).show();
+        }else if(IDs.contains(enteredHelioID)){
+            Toast.makeText(this, enteredHelioID+" is added.", Toast.LENGTH_LONG).show();
         }
         else {
             //TODO Probably do this in a more secure way...
