@@ -100,6 +100,11 @@ public class PlantDetail extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToMovement(View view) {
+        Intent intent = new Intent(this, ManualControl.class);
+        startActivity(intent);
+    }
+
 //    @Override
 //    public void finish() {
 //        super.finish();
