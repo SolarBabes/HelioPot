@@ -193,8 +193,8 @@ public class MetricData extends AppCompatActivity {
         Button4.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button5.setBackgroundResource(R.drawable.rounded_shape_grey);
         Button6.setBackgroundResource(R.drawable.rounded_shape_grey);
-
-        Long firstTime = System.currentTimeMillis()/1000-timeLength[0];
+        Long currentTime = System.currentTimeMillis()/1000;
+        Long firstTime = currentTime-timeLength[0];
         for (int i = 0; i < GRAPH_NO; i++) {
             ArrayList<Entry> dataValsNew;
             if (i==0){
@@ -209,15 +209,18 @@ public class MetricData extends AppCompatActivity {
             while (dataValsNew.size()>0 && dataValsNew.get(0).getX()+1580000000L<firstTime){
                 dataValsNew.remove(0);
             }
-            double interval = dataValsNew.size()/30;
+            double interval = timeLength[0]/50;
             ArrayList<Entry> finalVal = new ArrayList<Entry>();
-            for (int j = 0; j < 31;j++){
-                try{
-                    finalVal.add(dataValsNew.get((int)Math.round(j*interval)));
-                }catch (Exception e){
-
+            int n = 0;
+            for (Entry j : dataValsNew){
+                if (j.getX()>=n*interval){
+                    finalVal.add(j);
+                    n++;
+                    if (n==51){
+                        break;
+                    }
                 }
-                Log.d("111","round problem");
+
             }
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             LineDataSet lineDataSet = new LineDataSet(finalVal,allMeasurements[i]);
@@ -252,13 +255,16 @@ public class MetricData extends AppCompatActivity {
             }
             double interval = dataValsNew.size()/30;
             ArrayList<Entry> finalVal = new ArrayList<Entry>();
-            for (int j = 0; j < 31;j++){
-                try{
-                    finalVal.add(dataValsNew.get((int)Math.round(j*interval)));
-                }catch (Exception e){
-
+            int n = 0;
+            for (Entry j : dataValsNew){
+                if (j.getX()>=n*interval){
+                    finalVal.add(j);
+                    n++;
+                    if (n==51){
+                        break;
+                    }
                 }
-                Log.d("111","round problem");
+
             }
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             LineDataSet lineDataSet = new LineDataSet(finalVal,allMeasurements[i]);
@@ -293,13 +299,16 @@ public class MetricData extends AppCompatActivity {
             }
             double interval = dataValsNew.size()/30;
             ArrayList<Entry> finalVal = new ArrayList<Entry>();
-            for (int j = 0; j < 31;j++){
-                try{
-                    finalVal.add(dataValsNew.get((int)Math.round(j*interval)));
-                }catch (Exception e){
-
+            int n = 0;
+            for (Entry j : dataValsNew){
+                if (j.getX()>=n*interval){
+                    finalVal.add(j);
+                    n++;
+                    if (n==51){
+                        break;
+                    }
                 }
-                Log.d("111","round problem");
+
             }
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             LineDataSet lineDataSet = new LineDataSet(finalVal,allMeasurements[i]);

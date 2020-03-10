@@ -136,7 +136,9 @@ public class Login extends AppCompatActivity {
                 username = Name.getText().toString();
                 password = Password.getText().toString();
                 password = hash(password);
-                if (userinfo.containsKey(username)){
+                if (username.length()== 0 ){
+                    Toast.makeText(getApplicationContext(), "Username cannot be NULL.", Toast.LENGTH_SHORT).show();
+                }else if (userinfo.containsKey(username)){
                     Toast.makeText(getApplicationContext(), Name.getText().toString()+" has been registered, pleanse sign in", Toast.LENGTH_SHORT).show();
                 }else{
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("user");

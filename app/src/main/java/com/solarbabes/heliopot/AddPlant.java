@@ -24,6 +24,7 @@ public class AddPlant extends AppCompatActivity {
 
     // Path for available heliopots.
     private final String HELIOPOT_LOCATION = "heliopots";
+    private ArrayList<String> IDs = new ArrayList<>();
 
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(HELIOPOT_LOCATION);
     // Storing each plant as a DataSnaphot.
@@ -36,6 +37,7 @@ public class AddPlant extends AppCompatActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra("USERNAME");
+        IDs = intent.getExtras().getStringArrayList("IDs");
 
         // Setting a listener for new heliopots.
         // Required so we can check ID and passwords.
@@ -64,6 +66,7 @@ public class AddPlant extends AppCompatActivity {
     public void onSubmitButtonPress(View view) {
         EditText helioIDView = (EditText) findViewById(R.id.editText_helioPotID);
         EditText passwordView = (EditText) findViewById(R.id.editText_password);
+        EditText newPlantName = (EditText) findViewById(R.id.editText_plantName);
 
         String enteredHelioID = helioIDView.getText().toString();
         String enteredPassword = passwordView.getText().toString();
@@ -72,6 +75,8 @@ public class AddPlant extends AppCompatActivity {
         //TODO more checking.
         if (enteredHelioID.isEmpty() || enteredPassword.isEmpty()) {
             Toast.makeText(this, "Fill user & pw", Toast.LENGTH_LONG).show();
+        }else if(IDs.contains(enteredHelioID)){
+            Toast.makeText(this, enteredHelioID+" is added.", Toast.LENGTH_LONG).show();
         }
         else {
             //TODO Probably do this in a more secure way...
@@ -89,11 +94,11 @@ public class AddPlant extends AppCompatActivity {
 
                     // Add heliopot ID to this user.
                     //TODO only add the ID if it isn't already added.
-                    DatabaseReference user
-                            = FirebaseDatabase.getInstance().getReference("user/" + username);
+                    FirebaseDatabase.getInstance().getReference("user/" + username).child("ownedPots").push().setValue(helioID);
                     // Creates child if it doesn't exist.
                     // Push creates a new child with a random key.
-                    user.child("ownedPots").push().setValue(helioID);
+//                    user.child("ownedPots").push().setValue(helioID);
+                    FirebaseDatabase.getInstance().getReference("heliopots/" + helioID).child("name").setValue(newPlantName.getText().toString());
 
                     Intent intent = new Intent(this, PlantList.class);
 
@@ -108,5 +113,15 @@ public class AddPlant extends AppCompatActivity {
                 Toast.makeText(this, "Incorrect ID & PW Pair", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
