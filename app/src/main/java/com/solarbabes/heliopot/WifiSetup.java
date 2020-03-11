@@ -21,15 +21,16 @@ public class WifiSetup extends AppCompatActivity {
         setContentView(R.layout.activity_wifi_setup);
 
         ssid = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
     }
 
-    public void send(View v) {
+    public void send(View view) {
         TCPSender tcpSender = new TCPSender();
         tcpSender.execute(ssid.getText().toString());
-    }
-
-    public void goToPlantDetail(View view) {
-        Intent intent = new Intent(this, PlantDetail.class);
+        //tcpSender.execute(password.getText().toString());
+        Intent intent = new Intent(this, PlantList.class);
         startActivity(intent);
     }
+
+
 }
