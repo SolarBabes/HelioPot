@@ -16,6 +16,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="confirm">CONFIRM</string>
     <string-array name="types">
         <item>Mobile</item>
         <item>Office</item>

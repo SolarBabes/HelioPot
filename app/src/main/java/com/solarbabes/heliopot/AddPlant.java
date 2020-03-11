@@ -105,7 +105,7 @@ public class AddPlant extends AppCompatActivity {
 //                    user.child("ownedPots").push().setValue(helioID);
                     FirebaseDatabase.getInstance().getReference("heliopots/" + helioID).child("name").setValue(newPlantName.getText().toString());
 
-                    Intent intent = new Intent(this, PlantList.class);
+                    Intent intent = new Intent(this, WifiSetup.class);
 
                     startActivity(intent);
 
