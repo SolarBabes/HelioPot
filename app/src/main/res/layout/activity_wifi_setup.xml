@@ -6,26 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="280dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:hint="SSID"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
+    <Button
+        android:id="@+id/register"
+        style="@style/submit"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="313dp"
+        android:onClick="send"
+        android:text="@string/confirm"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="208dp" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="280dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
 
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
@@ -36,15 +37,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="280dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="122dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:hint="SSID"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/password"
@@ -52,25 +68,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
-    <Button
-        android:id="@+id/register"
-        style="@style/submit"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="CONFIRM"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="370dp" />
-
-    <EditText
-        android:id="@+id/editText"
+    <TextView
+        android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="49dp" />
+        android:layout_marginBottom="63dp"
+        android:layout_marginTop="121dp"
+        android:text="Please enter your home Wi-Fi settings"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.657" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
