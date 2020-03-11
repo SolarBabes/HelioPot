@@ -3,6 +3,7 @@ package com.solarbabes.heliopot;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,10 @@ public class AddPlant extends AppCompatActivity {
         Intent intent = getIntent();
         username = intent.getStringExtra("USERNAME");
         IDs = intent.getExtras().getStringArrayList("IDs");
+        Toolbar toolbar = findViewById(R.id.toolbaradd);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Setting a listener for new heliopots.
         // Required so we can check ID and passwords.

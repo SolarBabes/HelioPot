@@ -52,16 +52,8 @@ public class PlantList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         backtime = 0;
         setContentView(R.layout.activity_plant_list);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                if ("logout".equals(item.getTitle())){
-//                    Log.d("2323","5235");
-//                }
-//                return false;
-//            }
-//        });
+        Toolbar toolbar = findViewById(R.id.toolbarlist);
+//        toolbar.setTitle("title");
         setSupportActionBar(toolbar);
 
 //        ActionBar actionBar = getSupportActionBar();
@@ -196,6 +188,8 @@ public class PlantList extends AppCompatActivity {
 //        intent.putExtra(PLANT_NAME, plantNames.get(position));
 //        intent.putExtra(PLANT_NAME, plantItems.get(position).getName());//this works
         intent.putExtra(PLANT_ID, ownedPlants.get(position));//this works
+        intent.putExtra(PLANT_NAME, plantItems.get(position).getName());
+
         intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
