@@ -19,9 +19,16 @@
         <item name="colorPrimary">@color/palegreen</item>
         <item name="colorPrimaryDark">@color/darkgreen</item>
         <item name="colorAccent">@color/palegreen</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    </style>
+
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

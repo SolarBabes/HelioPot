@@ -1,6 +1,7 @@
 package com.solarbabes.heliopot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -61,6 +62,7 @@ public class MetricData extends AppCompatActivity {
     private ArrayList<Entry> lightVal = new ArrayList<Entry>();
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss ddMMM");
     private DatabaseReference mDatabase;
+    public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
 
     private int GRAPH_NO = 4;
     ValueEventListener Listener = new ValueEventListener() {
@@ -122,6 +124,14 @@ public class MetricData extends AppCompatActivity {
         setContentView(R.layout.activity_metric_data);
         Intent intent = getIntent();
         plantId = intent.getStringExtra(PlantList.PLANT_ID);
+        plantName = intent.getStringExtra(PLANT_NAME);
+
+        Toolbar toolbar = findViewById(R.id.toolbardetail);
+        toolbar.setTitle(plantName);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         mDatabase = FirebaseDatabase.getInstance().getReference("heliopots/"+plantId+"/data");
 
         mpLineChart[0] = (LineChart) findViewById(R.id.line_chart_temperature);

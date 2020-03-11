@@ -1,10 +1,12 @@
 package com.solarbabes.heliopot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class PlantDetail extends AppCompatActivity {
     private static String plantName;
     private static String username;
+    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.PLANT_NAME";
     public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
     public static final String PLANT_ID = "com.solarbabes.heliopot.PLANT_ID";
     // TODO delete static
@@ -41,7 +44,7 @@ public class PlantDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_detail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // The activity is started with just the name given from the clicked item in the list.
         // Using the name, we retrieve all stats.
@@ -49,6 +52,13 @@ public class PlantDetail extends AppCompatActivity {
         plantName = intent.getStringExtra("PLANT_NAME");
         plantId = intent.getStringExtra(PlantList.PLANT_ID);
         username = intent.getStringExtra("USERNAME");
+        plantName = intent.getStringExtra(PLANT_NAME);
+
+        Toolbar toolbar = findViewById(R.id.toolbardetail);
+        toolbar.setTitle(plantName);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Gives us access to the stored data children.
         mDatabase = FirebaseDatabase.getInstance().getReference("heliopots/"+plantId+"/data/realtime");
 //        mDatabase = FirebaseDatabase.getInstance().getReference("bot/"+plantName+"/realtime");
@@ -83,6 +93,7 @@ public class PlantDetail extends AppCompatActivity {
         Intent intent = new Intent(this, MetricData.class);
         String message = plantId;
         intent.putExtra(PLANT_ID, message);
+        intent.putExtra(PLANT_NAME, plantName);
         Log.d("detail go to metric",message);
         startActivity(intent);
     }
@@ -112,6 +123,13 @@ public class PlantDetail extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.normal_mune, menu);
         return true;
     }
 
