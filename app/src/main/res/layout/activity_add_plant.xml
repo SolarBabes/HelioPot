@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AddPlant">
 
-    <Button
-        android:id="@+id/button_addPicture"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="Add Picture"
-        style="@style/submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_plantName" />
-
     <EditText
         android:id="@+id/editText_helioPotID"
         android:layout_width="200dp"
@@ -60,13 +44,13 @@
         android:layout_width="107dp"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="24dp"
         android:onClick="onSubmitButtonPress"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_plantName" />
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <EditText
         android:id="@+id/editText_password"
@@ -83,5 +67,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_helioPotID" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:singleLine="false"
+        android:text='Find your HelioPot ID on the base of the robot.\n\nYou can add a name to easily reference the plant, e.g. "My Plant".'
+        app:layout_constraintEnd_toEndOf="@+id/editText_plantName"
+        app:layout_constraintStart_toStartOf="@+id/editText_plantName"
+        app:layout_constraintTop_toBottomOf="@+id/editText_plantName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

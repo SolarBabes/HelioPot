@@ -25,7 +25,7 @@ import java.util.Map;
 public class PlantDetail extends AppCompatActivity {
     private static String plantName;
     private static String username;
-    public static final String EXTRA_MESSAGE = "com.solarbabes.heliopot.PLANT_NAME";
+    public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
     public static final String PLANT_ID = "com.solarbabes.heliopot.PLANT_ID";
     // TODO delete static
     private static TextView temperature_view ;
@@ -46,7 +46,7 @@ public class PlantDetail extends AppCompatActivity {
         // The activity is started with just the name given from the clicked item in the list.
         // Using the name, we retrieve all stats.
         Intent intent = getIntent();
-//        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
+        plantName = intent.getStringExtra("PLANT_NAME");
         plantId = intent.getStringExtra(PlantList.PLANT_ID);
         username = intent.getStringExtra("USERNAME");
         // Gives us access to the stored data children.
@@ -89,9 +89,7 @@ public class PlantDetail extends AppCompatActivity {
 
     public void goToExtraInfo(View view) {
         Intent intent = new Intent(this, PlantExtraInfo.class);
-        String message = plantName;
-        intent.putExtra(EXTRA_MESSAGE, message);
-        intent.putExtra("USERNAME", username);
+        intent.putExtra(PLANT_NAME, plantName);
         startActivity(intent);
     }
 
