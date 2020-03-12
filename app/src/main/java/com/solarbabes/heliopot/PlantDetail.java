@@ -94,7 +94,6 @@ public class PlantDetail extends AppCompatActivity {
         String message = plantId;
         intent.putExtra(PLANT_ID, message);
         intent.putExtra(PLANT_NAME, plantName);
-        Log.d("detail go to metric",message);
         startActivity(intent);
     }
 
@@ -108,6 +107,7 @@ public class PlantDetail extends AppCompatActivity {
 
     public void goToGallery(View view) {
         Intent intent = new Intent(this, PlantGallery.class);
+        intent.putExtra(PLANT_NAME, plantName);
         startActivity(intent);
     }
 

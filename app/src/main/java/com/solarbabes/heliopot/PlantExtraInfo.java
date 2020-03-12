@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,12 @@ public class PlantExtraInfo extends AppCompatActivity {
         setContentView(R.layout.activity_plant_extra_info);
         Intent intent = getIntent();
         plantName = intent.getStringExtra(PlantList.PLANT_NAME);
+
+        Toolbar toolbar = findViewById(R.id.toolbarinfo);
+        toolbar.setTitle(plantName);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         if (plantName != null) {
             EditText plantNameBox = (EditText) findViewById(R.id.plantName);

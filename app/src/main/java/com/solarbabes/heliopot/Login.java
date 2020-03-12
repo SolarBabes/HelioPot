@@ -50,7 +50,12 @@ public class Login extends AppCompatActivity {
         public void onDataChange(DataSnapshot dataSnapshot) {
             for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                 if (!userinfo.containsKey(postSnapshot.getKey())){
-                    userinfo.put(postSnapshot.getKey(),postSnapshot.child("password").getValue().toString());
+                    try{
+                        userinfo.put(postSnapshot.getKey(),postSnapshot.child("password").getValue().toString());
+                    }catch (Exception e){
+                        Log.d("login","login");
+                    }
+
                 }
             }
         }
@@ -67,8 +72,6 @@ public class Login extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarlogin);
         toolbar.setTitle("HelioPot");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Name = (EditText)findViewById(R.id.username);
         Password = (EditText)findViewById(R.id.password);

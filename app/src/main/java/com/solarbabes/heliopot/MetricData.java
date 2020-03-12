@@ -125,8 +125,7 @@ public class MetricData extends AppCompatActivity {
         Intent intent = getIntent();
         plantId = intent.getStringExtra(PlantList.PLANT_ID);
         plantName = intent.getStringExtra(PLANT_NAME);
-
-        Toolbar toolbar = findViewById(R.id.toolbardetail);
+        Toolbar toolbar = findViewById(R.id.toolbarmetric);
         toolbar.setTitle(plantName);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

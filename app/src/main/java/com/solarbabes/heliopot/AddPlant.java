@@ -40,6 +40,7 @@ public class AddPlant extends AppCompatActivity {
         username = intent.getStringExtra("USERNAME");
         IDs = intent.getExtras().getStringArrayList("IDs");
         Toolbar toolbar = findViewById(R.id.toolbaradd);
+        toolbar.setTitle("Add HelioPot");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
