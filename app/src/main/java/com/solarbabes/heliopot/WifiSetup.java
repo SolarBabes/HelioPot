@@ -25,8 +25,6 @@ public class WifiSetup extends AppCompatActivity {
     }
 
     public void send(View view) {
-        TCPSender tcpSender = new TCPSender();
-        tcpSender.execute(ssid.getText().toString());
         //tcpSender.execute(password.getText().toString());
         Intent intent = new Intent(this, PlantList.class);
         startActivity(intent);
