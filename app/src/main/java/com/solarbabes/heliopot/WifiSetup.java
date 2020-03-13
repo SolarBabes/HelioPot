@@ -27,6 +27,8 @@ public class WifiSetup extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarwifi);
         toolbar.setTitle("Wifi setting");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         ssid = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -51,7 +53,20 @@ public class WifiSetup extends AppCompatActivity {
         }.start();
         thread =  new Thread(udpUtils);
         thread.start();
+        Intent intent = new Intent(this, PlantList.class);
+        startActivity(intent);
+        //TODO plant list page should finsh
+        // finish(); ORDER IS WRONG NOW!!!!!!
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -106,9 +108,7 @@ public class AddPlant extends AppCompatActivity {
 //                    user.child("ownedPots").push().setValue(helioID);
                     FirebaseDatabase.getInstance().getReference("heliopots/" + helioID).child("name").setValue(newPlantName.getText().toString());
 
-                    Intent intent = new Intent(this, WifiSetup.class);
-
-                    startActivity(intent);
+                    next();
 
                     pairFound = true;
                     break;
@@ -120,6 +120,36 @@ public class AddPlant extends AppCompatActivity {
             }
         }
     }
+
+    private void next(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlant.this);
+
+        builder.setCancelable(true);
+        builder.setTitle("Wifi connection");
+        builder.setMessage("Can HeiloPot connect to your home Wifi");
+
+        builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onBackPressed();
+            }
+        });
+
+        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                goToWifiSetting();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void goToWifiSetting(){
+        Intent intent = new Intent(this, WifiSetup.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
