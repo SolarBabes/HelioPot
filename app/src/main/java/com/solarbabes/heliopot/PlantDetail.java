@@ -49,7 +49,7 @@ public class PlantDetail extends AppCompatActivity {
         // The activity is started with just the name given from the clicked item in the list.
         // Using the name, we retrieve all stats.
         Intent intent = getIntent();
-//        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
+        plantName = intent.getStringExtra("PLANT_NAME");
         plantId = intent.getStringExtra(PlantList.PLANT_ID);
         username = intent.getStringExtra("USERNAME");
         plantName = intent.getStringExtra(PLANT_NAME);
@@ -99,9 +99,7 @@ public class PlantDetail extends AppCompatActivity {
 
     public void goToExtraInfo(View view) {
         Intent intent = new Intent(this, PlantExtraInfo.class);
-        String message = plantName;
-        intent.putExtra(EXTRA_MESSAGE, message);
-        intent.putExtra("USERNAME", username);
+        intent.putExtra(PLANT_NAME, plantName);
         startActivity(intent);
     }
 

@@ -16,13 +16,14 @@ import android.widget.Toast;
 public class PlantExtraInfo extends AppCompatActivity {
     public static String plantName;
     public static String plantNotes;
+    public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_extra_info);
         Intent intent = getIntent();
-        plantName = intent.getStringExtra(PlantList.PLANT_NAME);
+        plantName = intent.getStringExtra(PLANT_NAME);
 
         Toolbar toolbar = findViewById(R.id.toolbarinfo);
         toolbar.setTitle(plantName);

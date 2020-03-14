@@ -16,6 +16,8 @@ public class ManualControl extends AppCompatActivity {
 //    String SERVER_IP = "192.168.105.41";
     String SERVER_PORT = "9800";
 
+    int windowNumber = 1;
+
     private Socket socket;
     private ObjectOutputStream oos;
 
@@ -66,6 +68,15 @@ public class ManualControl extends AppCompatActivity {
 
     public void onStopClick(View view) throws IOException {
         new Thread(new SendMSGThread("STOP")).start();
+    }
+
+    public void onWindowClick(View view) throws IOException {
+        new Thread(new SendMSGThread("LOCATION_WINDOW_" + windowNumber)).start();
+        windowNumber++;
+    }
+
+    public void onStationClick(View view) throws IOException {
+        new Thread(new SendMSGThread("LOCATION_STATION")).start();
     }
 
     class ClientThread implements Runnable {
