@@ -1,5 +1,6 @@
 package com.solarbabes.heliopot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -26,6 +27,13 @@ public class ManualControl extends AppCompatActivity {
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.manual_control);
+
+        Intent intent = getIntent();
+        String ip = intent.getStringExtra("IPADDRESS");
+
+        if (ip != null) {
+            SERVER_IP = ip;
+        }
 
         new Thread(new ClientThread()).start();
 

@@ -111,6 +111,11 @@ public class PlantDetail extends AppCompatActivity {
 
     public void goToMovement(View view) {
         Intent intent = new Intent(this, ManualControl.class);
+
+        EditText ipEditText = findViewById(R.id.editText_IPAddress);
+        String IPAddress = ipEditText.getText().toString();
+        intent.putExtra("IPADDRESS", IPAddress);
+
         startActivity(intent);
     }
 
