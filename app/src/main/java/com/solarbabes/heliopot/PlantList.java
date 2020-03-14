@@ -1,6 +1,8 @@
 package com.solarbabes.heliopot;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -25,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,9 +42,11 @@ public class PlantList extends AppCompatActivity {
 
     ListView plantList;
     ArrayList<PlantListItem> plantItems = new ArrayList<>();
+    HashMap<String, String> idKey = new HashMap<>();
     ArrayList<String> ownedPlants = new ArrayList<>();
     private DatabaseReference mDatabase;
     private DatabaseReference userRef; // USED FOR GETTING OWNED IDs.
+    private String removeID ;
 
     private static int backtime = 0;
     public static String username;
@@ -90,6 +95,38 @@ public class PlantList extends AppCompatActivity {
                 goToPlantDetail(position);
             }
         });
+
+        plantList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(PlantList.this);
+                removeID=ownedPlants.get(position);
+                builder.setCancelable(true);
+                builder.setTitle("Remove plant");
+                builder.setMessage("Do you want to remove "+getPlantName(ownedPlants.get(position))+"?");
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        removePlant(removeID);
+                    }
+                });
+                builder.show();
+                return true;
+            }
+        });
+    }
+
+    private void removePlant(String id){
+        Log.d("!23",idKey.get(id));
+        userRef.child("ownedPots").child(idKey.get(id)).removeValue();
     }
 
     @Override
@@ -124,6 +161,7 @@ public class PlantList extends AppCompatActivity {
 
             for (DataSnapshot ID : IDRoot.getChildren()) {
                 IDs.add(ID.getValue().toString());
+                idKey.put(ID.getValue().toString(), ID.getKey().toString());
             }
             ownedPlants = IDs;
 
