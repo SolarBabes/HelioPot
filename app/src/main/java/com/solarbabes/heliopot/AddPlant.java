@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -75,6 +76,7 @@ public class AddPlant extends AppCompatActivity {
         EditText helioIDView = (EditText) findViewById(R.id.editText_helioPotID);
         EditText passwordView = (EditText) findViewById(R.id.editText_password);
         EditText newPlantName = (EditText) findViewById(R.id.editText_plantName);
+        Spinner plantType = (Spinner) findViewById((R.id.type_spinner));
 
         String enteredHelioID = helioIDView.getText().toString();
         String enteredPassword = passwordView.getText().toString();
@@ -85,6 +87,10 @@ public class AddPlant extends AppCompatActivity {
             Toast.makeText(this, "Fill user & pw", Toast.LENGTH_LONG).show();
         }else if(IDs.contains(enteredHelioID)){
             Toast.makeText(this, enteredHelioID+" is added.", Toast.LENGTH_LONG).show();
+        }else if("Plant Type".equals(plantType.getSelectedItem().toString())){
+            Toast.makeText(this, "Please select plant type.", Toast.LENGTH_LONG).show();
+        }else if(newPlantName.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please enter plant name.", Toast.LENGTH_LONG).show();
         }
         else {
             //TODO Probably do this in a more secure way...
@@ -107,6 +113,7 @@ public class AddPlant extends AppCompatActivity {
                     // Push creates a new child with a random key.
 //                    user.child("ownedPots").push().setValue(helioID);
                     FirebaseDatabase.getInstance().getReference("heliopots/" + helioID).child("name").setValue(newPlantName.getText().toString());
+                    FirebaseDatabase.getInstance().getReference("heliopots/" + helioID).child("type").setValue(plantType.getSelectedItem().toString());
 
                     next();
 

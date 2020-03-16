@@ -22,4 +22,10 @@
         <item>Office</item>
         <item>Home</item>
     </string-array>
+    <string-array name="planttypes">
+        <item>Plant Type</item>
+        <item>ZZ Plant</item>
+        <item>Bamboo Palm Plant</item>
+        <item>Ming Aralia Plant</item>
+    </string-array>
 </resources>
