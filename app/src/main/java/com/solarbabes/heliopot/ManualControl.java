@@ -2,7 +2,9 @@ package com.solarbabes.heliopot;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +25,9 @@ public class ManualControl extends AppCompatActivity {
     private ObjectOutputStream oos;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -34,6 +39,104 @@ public class ManualControl extends AppCompatActivity {
         if (ip != null) {
             SERVER_IP = ip;
         }
+
+        ImageButton forwardBtn = findViewById(R.id.button_forward);
+        ImageButton backBtn = findViewById(R.id.button_back);
+        ImageButton cwBtn = findViewById(R.id.button_cw);
+        ImageButton acwBtn = findViewById(R.id.button_acw);
+
+        forwardBtn.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    try {
+                        onForwardClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        onStopClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+        });
+
+        backBtn.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    try {
+                        onBackClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        onStopClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+        });
+
+
+        cwBtn.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    try {
+                        onCWClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        onStopClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+        });
+
+        acwBtn.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    try {
+                        onACWClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    try {
+                        onStopClick(v);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+        });
 
         new Thread(new ClientThread()).start();
 
@@ -66,11 +169,11 @@ public class ManualControl extends AppCompatActivity {
         new Thread(new SendMSGThread("BACK")).start();
     }
 
-    public void onLeftClick(View view) throws IOException {
+    public void onACWClick(View view) throws IOException {
         new Thread(new SendMSGThread("ACW")).start();
     }
 
-    public void onRightClick(View view) throws IOException {
+    public void onCWClick(View view) throws IOException {
         new Thread(new SendMSGThread("CW")).start();
     }
 
@@ -79,12 +182,15 @@ public class ManualControl extends AppCompatActivity {
     }
 
     public void onWindowClick(View view) throws IOException {
-        new Thread(new SendMSGThread("LOCATION_WINDOW_" + windowNumber)).start();
-        windowNumber++;
+        new Thread(new SendMSGThread("LOCATION_WINDOW")).start();
     }
 
     public void onStationClick(View view) throws IOException {
         new Thread(new SendMSGThread("LOCATION_STATION")).start();
+    }
+
+    public void onFinishClick(View view) throws IOException {
+        new Thread(new SendMSGThread("FINISH")).start();
     }
 
     class ClientThread implements Runnable {

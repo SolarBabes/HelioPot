@@ -90,7 +90,7 @@ public class Login extends AppCompatActivity {
 
         if (username!=null && !username.equals("")){
             Name.setText(username);
-            Toast.makeText(getApplicationContext(),"Welcome back!"+username, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Welcome back "+username, Toast.LENGTH_LONG).show();
             gotoList(username);
         }
 
