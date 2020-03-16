@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -17,12 +20,16 @@ public class ManualControl extends AppCompatActivity {
     String SERVER_IP = "192.168.43.89"; // IP for Waffle on Manav's.
 //    String SERVER_IP = "192.168.105.184";
 //    String SERVER_IP = "192.168.105.41";
-    String SERVER_PORT = "9800";
+    //String SERVER_PORT = "9800";
+    int port = 9800;
 
-    int windowNumber = 1;
+//    int windowNumber = 1;
 
-    private Socket socket;
-    private ObjectOutputStream oos;
+//    private Socket socket;
+//    private ObjectOutputStream oos;
+    InetAddress address;
+    DatagramSocket udpSoc;
+
 
 
 
@@ -34,10 +41,23 @@ public class ManualControl extends AppCompatActivity {
         setContentView(R.layout.manual_control);
 
         Intent intent = getIntent();
+
+        try {
+            address = InetAddress.getByName(SERVER_IP);
+            udpSoc = new DatagramSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String ip = intent.getStringExtra("IPADDRESS");
 
         if (ip != null) {
             SERVER_IP = ip;
+            try {
+                address = InetAddress.getByName(SERVER_IP);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         ImageButton forwardBtn = findViewById(R.id.button_forward);
@@ -138,7 +158,7 @@ public class ManualControl extends AppCompatActivity {
             }
         });
 
-        new Thread(new ClientThread()).start();
+        //new Thread(new ClientThread()).start();
 
         // Socket is now open. Can send movement messages.
     }
@@ -146,17 +166,18 @@ public class ManualControl extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        udpSoc.close();
 
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            //socket.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            oos.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     // Button click event handlers.
@@ -193,26 +214,26 @@ public class ManualControl extends AppCompatActivity {
         new Thread(new SendMSGThread("FINISH")).start();
     }
 
-    class ClientThread implements Runnable {
-        // Thread for opening a socket with the manual control server (on the Turtlebot).
-
-        @Override
-        public void run() {
-            try {
-                socket = new Socket(SERVER_IP, Integer.parseInt(SERVER_PORT));
-            } catch (UnknownHostException e1) {
-                e1.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                oos = new ObjectOutputStream(socket.getOutputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    class ClientThread implements Runnable {
+//        // Thread for opening a socket with the manual control server (on the Turtlebot).
+//
+//        @Override
+//        public void run() {
+//            try {
+//                socket = new Socket(SERVER_IP, Integer.parseInt(SERVER_PORT));
+//            } catch (UnknownHostException e1) {
+//                e1.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//                oos = new ObjectOutputStream(socket.getOutputStream());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     class SendMSGThread implements Runnable {
         // Thread for sending messages.
@@ -227,7 +248,11 @@ public class ManualControl extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                oos.writeObject(message);
+                //oos.writeObject(message);
+                byte[] buffer = message.getBytes();
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, port);
+                udpSoc.send(packet);
+                System.out.println("send");
             } catch (IOException e) {
                 e.printStackTrace();
             }
