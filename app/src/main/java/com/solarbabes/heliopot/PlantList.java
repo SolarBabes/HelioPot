@@ -206,7 +206,7 @@ public class PlantList extends AppCompatActivity {
         for (DataSnapshot heliopot : update.getChildren()) {
             //TODO Add real values to retrieve from server for picID & watering time.
             int picID = R.drawable.plant1;
-            String wateringTime = "Watering Time: 20:22";
+            String wateringTime = heliopot.child("message").getValue().toString();
             String name = heliopot.child("name").getValue().toString();
             String ID = heliopot.child("id").getValue().toString();
             plantItems.add(new PlantListItem(ID, picID, name, wateringTime));
@@ -243,7 +243,7 @@ public class PlantList extends AppCompatActivity {
     // To be called when the + button is clicked.
     public void addPlant(View view) {
         backtime = 0;
-        Intent intent = new Intent(this, AddPlant.class);
+        Intent intent = new Intent(this, Main2Activity.class);
         intent.putExtra("USERNAME", username);
         intent.putStringArrayListExtra("IDs", ownedPlants);
         startActivity(intent);
