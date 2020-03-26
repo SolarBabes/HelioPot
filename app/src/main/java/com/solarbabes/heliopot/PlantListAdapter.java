@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class PlantListAdapter extends BaseAdapter {
@@ -44,13 +42,13 @@ public class PlantListAdapter extends BaseAdapter {
         convertView = thisInflater.inflate(R.layout.plant_list_item, parent, false);
 
         TextView plantName = (TextView) convertView.findViewById(R.id.textView_Name);
-        TextView plantWateringTime = (TextView) convertView.findViewById(R.id.textView_WateringTime);
+        TextView plantMessage = (TextView) convertView.findViewById(R.id.textView_message);
         ImageView plantImage = (ImageView) convertView.findViewById(R.id.imageView_plant);
 
         PlantListItem current = (PlantListItem) getItem(position);
 
         plantName.setText(current.getName());
-        plantWateringTime.setText(current.getWateringTime());
+        plantMessage.setText(current.getWateringTime());
         plantImage.setImageResource(current.getImageID());
 
         return convertView;

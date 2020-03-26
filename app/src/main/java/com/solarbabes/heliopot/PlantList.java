@@ -243,7 +243,7 @@ public class PlantList extends AppCompatActivity {
     // To be called when the + button is clicked.
     public void addPlant(View view) {
         backtime = 0;
-        Intent intent = new Intent(this, Main2Activity.class);
+        Intent intent = new Intent(this, AddPlant.class);
         intent.putExtra("USERNAME", username);
         intent.putStringArrayListExtra("IDs", ownedPlants);
         startActivity(intent);
