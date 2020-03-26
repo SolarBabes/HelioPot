@@ -9,12 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
 
     // Constructor
-    public ImageAdapter(Context c) {
+    public ImageAdapter(Context c, String plantID) {
         mContext = c;
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child(plantID);
     }
 
     public int getCount() {

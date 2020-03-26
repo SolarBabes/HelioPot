@@ -20,15 +20,22 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class PlantGallery extends AppCompatActivity {
     public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
+    public static final String PLANT_ID = "com.solarbabes.heliopot.PLANT_ID";
     private String plantName;
+    private String plantID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_gallery);
         Intent intent = getIntent();
         plantName = intent.getStringExtra(PLANT_NAME);
+        plantID = intent.getStringExtra(PLANT_ID);
+
 
         Toolbar toolbar = findViewById(R.id.toolbargallery);
         toolbar.setTitle(plantName);
@@ -37,7 +44,7 @@ public class PlantGallery extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         final GridView gridview = (GridView)findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+        gridview.setAdapter(new ImageAdapter(this, plantID));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
