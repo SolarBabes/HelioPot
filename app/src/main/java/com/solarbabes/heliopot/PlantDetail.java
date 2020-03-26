@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -39,6 +40,7 @@ public class PlantDetail extends AppCompatActivity {
     private EditText Interval;
     private Button send;
     private int interval = 0;
+    private int moisture = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,18 @@ public class PlantDetail extends AppCompatActivity {
             Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
             temperature_view.setText(map.get("temperature").toString()+"°C");
             humidity_view.setText(map.get("humidity").toString()+"%");
-            moisture_view.setText(map.get("moisture").toString());
+            moisture = Integer.parseInt(map.get("moisture").toString());
+            if (moisture < 200){
+                moisture_view.setText("Too dry");
+                moisture_view.setTextColor(Color.parseColor("#ff0000"));
+            }else if (moisture < 800){
+                moisture_view.setText("Good");
+                moisture_view.setTextColor(Color.parseColor("#698C59"));
+            }else{
+                moisture_view.setText("Too wet");
+                moisture_view.setTextColor(Color.parseColor("#0000ff"));
+            }
+
         }
         @Override
         public void onCancelled(DatabaseError databaseError) {
@@ -106,6 +119,7 @@ public class PlantDetail extends AppCompatActivity {
     public void goToGallery(View view) {
         Intent intent = new Intent(this, PlantGallery.class);
         intent.putExtra(PLANT_NAME, plantName);
+        intent.putExtra(PLANT_ID, plantId);
         startActivity(intent);
     }
 
