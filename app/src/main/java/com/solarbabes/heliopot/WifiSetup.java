@@ -3,6 +3,8 @@ package com.solarbabes.heliopot;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,6 +19,7 @@ public class WifiSetup extends AppCompatActivity {
     private EditText password;
     private UDPUtils udpUtils;
     private Thread thread;
+    private int status=0;// 1:connected
 
 
     @Override
@@ -29,6 +32,27 @@ public class WifiSetup extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(WifiSetup.this);
+        builder.setCancelable(true);
+        builder.setTitle("Please reconnect to HelioPot's WiFi");
+        builder.setMessage("Go to WiFi setting, connect to WiFi which name is start with HelioPot");
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onBackPressed();
+            }
+        });
+
+        builder.setPositiveButton("Connected", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.show();
+
 
         ssid = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -49,12 +73,14 @@ public class WifiSetup extends AppCompatActivity {
             public void run(){
                 udpUtils.sendControInfo(ssid.getText().toString(),password.getText().toString());
                 Toast.makeText(getApplicationContext(), "Wi-fi info received successfully", Toast.LENGTH_SHORT).show();
+                status =1;
             }
         }.start();
         thread =  new Thread(udpUtils);
         thread.start();
         Intent intent = new Intent(this, PlantList.class);
         startActivity(intent);
+        finish();
         //TODO plant list page should finsh
         // finish(); ORDER IS WRONG NOW!!!!!!
     }
