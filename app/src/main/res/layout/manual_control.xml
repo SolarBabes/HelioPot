@@ -6,6 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarmovement"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <Button
         android:id="@+id/button8"
         style="@style/submit"
@@ -40,12 +58,13 @@
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
+        android:layout_marginTop="25dp"
         android:adjustViewBounds="true"
         android:background="@null"
         android:padding="0dp"
-        android:scaleType="fitCenter"
 
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/button_finish"
         app:layout_constraintEnd_toEndOf="@+id/button_forward"
         app:layout_constraintStart_toStartOf="@+id/button_forward"
         app:layout_constraintTop_toBottomOf="@+id/button_forward"
@@ -55,6 +74,7 @@
         android:id="@+id/button_forward"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
+        android:layout_marginBottom="25dp"
         android:adjustViewBounds="true"
         android:background="@null"
         android:hapticFeedbackEnabled="false"
@@ -64,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
         app:srcCompat="@drawable/up" />
 
     <Button
@@ -109,6 +129,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_forward"
         app:srcCompat="@drawable/left" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Please use the below controls to manually move your HelioPot around your home / workspace. This is used to create an internal map for the HelioPot, so it knows where it can move.\n\nUse the buttons to mark the location of any windows to be considered, as well as the location of the charging station."
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_cw"
+        app:layout_constraintStart_toStartOf="@+id/button_acw"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--<a href="https://www.freepik.com/free-photos-vectors/infographic">

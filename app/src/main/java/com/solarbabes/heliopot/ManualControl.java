@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -30,17 +31,18 @@ public class ManualControl extends AppCompatActivity {
     InetAddress address;
     DatagramSocket udpSoc;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.manual_control);
 
         Intent intent = getIntent();
+
+        Toolbar toolbar = findViewById(R.id.toolbarmovement);
+        toolbar.setTitle("Map Setup");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         try {
             address = InetAddress.getByName(SERVER_IP);
@@ -169,6 +171,14 @@ public class ManualControl extends AppCompatActivity {
         //new Thread(new ClientThread()).start();
 
         // Socket is now open. Can send movement messages.
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        // Controls the toolbar back button behaviour.
+        // Required so back bar and back button has the same animation.
+        onBackPressed();
+        return true;
     }
 
     @Override
