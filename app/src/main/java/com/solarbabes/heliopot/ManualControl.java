@@ -60,10 +60,10 @@ public class ManualControl extends AppCompatActivity {
             }
         }
 
-        ImageButton forwardBtn = findViewById(R.id.button_forward);
-        ImageButton backBtn = findViewById(R.id.button_back);
-        ImageButton cwBtn = findViewById(R.id.button_cw);
-        ImageButton acwBtn = findViewById(R.id.button_acw);
+        final ImageButton forwardBtn = findViewById(R.id.button_forward);
+        final ImageButton backBtn = findViewById(R.id.button_back);
+        final ImageButton cwBtn = findViewById(R.id.button_cw);
+        final ImageButton acwBtn = findViewById(R.id.button_acw);
 
         forwardBtn.setOnTouchListener(new View.OnTouchListener()
         {
@@ -73,6 +73,7 @@ public class ManualControl extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     try {
                         onForwardClick(v);
+                        forwardBtn.setImageResource(R.drawable.up_clicked);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -80,6 +81,7 @@ public class ManualControl extends AppCompatActivity {
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     try {
                         onStopClick(v);
+                        forwardBtn.setImageResource(R.drawable.up);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -96,6 +98,7 @@ public class ManualControl extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     try {
                         onBackClick(v);
+                        backBtn.setImageResource(R.drawable.down_clicked);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -103,6 +106,7 @@ public class ManualControl extends AppCompatActivity {
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     try {
                         onStopClick(v);
+                        backBtn.setImageResource(R.drawable.down);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -120,6 +124,7 @@ public class ManualControl extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     try {
                         onCWClick(v);
+                        cwBtn.setImageResource(R.drawable.right_clicked);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -127,6 +132,7 @@ public class ManualControl extends AppCompatActivity {
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     try {
                         onStopClick(v);
+                        cwBtn.setImageResource(R.drawable.right);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -143,6 +149,7 @@ public class ManualControl extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     try {
                         onACWClick(v);
+                        acwBtn.setImageResource(R.drawable.left_clicked);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -150,6 +157,7 @@ public class ManualControl extends AppCompatActivity {
                 else if (event.getAction() == MotionEvent.ACTION_UP) {
                     try {
                         onStopClick(v);
+                        acwBtn.setImageResource(R.drawable.left);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
