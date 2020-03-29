@@ -45,7 +45,7 @@
             android:paddingTop="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:text="Yes. Just add the existing HelioPot" />
+            android:text="Yes. Just add an existing HelioPot" />
 
         <Space
             android:layout_width="match_parent"

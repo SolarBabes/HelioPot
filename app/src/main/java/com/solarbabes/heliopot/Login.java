@@ -90,7 +90,7 @@ public class Login extends AppCompatActivity {
 
         if (username!=null && !username.equals("")){
             Name.setText(username);
-            Toast.makeText(getApplicationContext(),"Welcome back "+username, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Welcome back, "+username+"!", Toast.LENGTH_LONG).show();
             gotoList(username);
         }
 
@@ -260,13 +260,8 @@ public class Login extends AppCompatActivity {
             fis = openFileInput(name);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
 
-
-            while ((text = br.readLine()) != null) {
-                sb.append(text).append("\n");
-            }
-            text = sb.toString();
+            text = br.readLine();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
