@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,7 @@ public class PlantList extends AppCompatActivity {
 
     private static int backtime = 0;
     public static String username;
+    private static AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,14 @@ public class PlantList extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (dialog != null) {
+            dialog.cancel();
+        }
     }
 
     private void removePlant(String id){
@@ -242,12 +253,45 @@ public class PlantList extends AppCompatActivity {
 
     // To be called when the + button is clicked.
     public void addPlant(View view) {
+
+        ///// Integrating movement setup on creation. ////////
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PlantList.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_new_plant, null);
+
+        dialogBuilder.setView(dialogView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        // Alternative way of exiting the dialog. Can also just click outside of the dialog.
+        // This checkbox event has to be handled here as it needs access to the dialog object.
+        Button cancelButton = dialogView.findViewById(R.id.button_cancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    public void startFullSetup(View view) {
         backtime = 0;
+        AddPlant.mapCreated = false;
         Intent intent = new Intent(this, AddPlant.class);
+        intent.putExtra("SETUP_TYPE", "FULL");
         intent.putExtra("USERNAME", username);
         intent.putStringArrayListExtra("IDs", ownedPlants);
         startActivity(intent);
     }
+
+    public void startMinorSetup(View view) {
+        backtime = 0;
+        Intent intent = new Intent(this, AddPlant.class);
+        intent.putExtra("SETUP_TYPE", "MINOR");
+        intent.putExtra("USERNAME", username);
+        intent.putStringArrayListExtra("IDs", ownedPlants);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

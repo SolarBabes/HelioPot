@@ -28,4 +28,18 @@
         <item>Bamboo Palm Plant</item>
         <item>Ming Aralia Plant</item>
     </string-array>
+    <string-array name="picture_settings">
+        <item>Picture Times</item>
+        <item>Every Day</item>
+        <item>Every Two Days</item>
+        <item>Every Three Days</item>
+        <item>Every Four Days</item>
+        <item>Every Five Days</item>
+        <item>Every Six Days</item>
+        <item>Every Seven Days</item>
+        <item>Every Week</item>
+        <item>Every Two Weeks</item>
+        <item>Every Three Weeks</item>
+        <item>Every Month</item>
+    </string-array>
 </resources>

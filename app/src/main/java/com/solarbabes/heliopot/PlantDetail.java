@@ -123,16 +123,6 @@ public class PlantDetail extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToMovement(View view) {
-        Intent intent = new Intent(this, ManualControl.class);
-
-        EditText ipEditText = findViewById(R.id.editText_IPAddress);
-        String IPAddress = ipEditText.getText().toString();
-        intent.putExtra("IPADDRESS", IPAddress);
-
-        startActivity(intent);
-    }
-
 //    @Override
 //    public void finish() {
 //        super.finish();

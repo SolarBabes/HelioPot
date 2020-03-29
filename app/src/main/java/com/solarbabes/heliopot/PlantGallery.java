@@ -20,8 +20,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+//import com.google.firebase.storage.FirebaseStorage;
+//import com.google.firebase.storage.StorageReference;
 
 public class PlantGallery extends AppCompatActivity {
     public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";

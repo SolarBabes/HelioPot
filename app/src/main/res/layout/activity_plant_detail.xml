@@ -37,7 +37,6 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
             android:text="Overview"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -212,26 +211,6 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageView12"
                 app:layout_constraintStart_toStartOf="@+id/textView20" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/button12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="goToMovement"
-            android:text="MoveTest"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/editText_IPAddress"
-            android:layout_width="131dp"
-            android:layout_height="44dp"
-            android:ems="10"
-            android:hint="Server IP"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

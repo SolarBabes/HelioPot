@@ -230,6 +230,8 @@ public class ManualControl extends AppCompatActivity {
 
     public void onFinishClick(View view) throws IOException {
         new Thread(new SendMSGThread("FINISH")).start();
+        AddPlant.mapCreated = true;
+        onBackPressed();
     }
 
 //    class ClientThread implements Runnable {

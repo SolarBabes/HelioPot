@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,6 +34,9 @@ public class AddPlant extends AppCompatActivity {
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(HELIOPOT_LOCATION);
     // Storing each plant as a DataSnaphot.
     private ArrayList<DataSnapshot> heliopots = new ArrayList<>();
+
+    public static boolean mapCreated = false;
+    private static String setupType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,29 +74,63 @@ public class AddPlant extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
+
+        setupType = intent.getStringExtra("SETUP_TYPE");
+        // Showing the correct views for the chosen setup type.
+        if (setupType.equals("MINOR")) {
+            EditText plantNameEditText = findViewById(R.id.editText_plantName);
+            Button createSetupButton = findViewById(R.id.button_map_setup);
+            Spinner plantTypeSpinner = findViewById(R.id.spinner_plant_type);
+            Spinner pictureTimesSpinner = findViewById(R.id.spinner_picture_times);
+
+            plantNameEditText.setVisibility(View.GONE);
+            plantTypeSpinner.setVisibility(View.GONE);
+            pictureTimesSpinner.setVisibility(View.GONE);
+            createSetupButton.setVisibility(View.GONE);
+        } // else don't hide anything.
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (mapCreated == true) {
+            Button mapSetupButton = (Button) findViewById(R.id.button_map_setup);
+            mapSetupButton.setText("Map Created");
+            mapSetupButton.setTextColor(getResources().getColor(R.color.darkgreen));
+            mapSetupButton.setClickable(false);
+        }
     }
 
     public void onSubmitButtonPress(View view) {
         EditText helioIDView = (EditText) findViewById(R.id.editText_helioPotID);
         EditText passwordView = (EditText) findViewById(R.id.editText_password);
         EditText newPlantName = (EditText) findViewById(R.id.editText_plantName);
-        Spinner plantType = (Spinner) findViewById((R.id.type_spinner));
+        Spinner plantType = (Spinner) findViewById(R.id.spinner_picture_times);
+        Spinner pictureTimes = (Spinner) findViewById(R.id.spinner_picture_times);
 
         String enteredHelioID = helioIDView.getText().toString();
         String enteredPassword = passwordView.getText().toString();
 
-        // Check ID & PW are legal.
-        //TODO more checking.
+        boolean fieldsCorrect = false;
+
+        // Checking required fields are filled.
         if (enteredHelioID.isEmpty() || enteredPassword.isEmpty()) {
             Toast.makeText(this, "Fill user & pw", Toast.LENGTH_LONG).show();
         }else if(IDs.contains(enteredHelioID)){
             Toast.makeText(this, enteredHelioID+" is added.", Toast.LENGTH_LONG).show();
-        }else if("Plant Type".equals(plantType.getSelectedItem().toString())){
+        }else if((setupType.equals("FULL")) && (plantType.getSelectedItem().toString().equals("Plant Type"))) {
             Toast.makeText(this, "Please select plant type.", Toast.LENGTH_LONG).show();
-        }else if(newPlantName.getText().toString().isEmpty()){
+        }else if((setupType.equals("FULL")) && (newPlantName.getText().toString().isEmpty())){
             Toast.makeText(this, "Please enter plant name.", Toast.LENGTH_LONG).show();
+        } else if((setupType.equals("FULL")) && (mapCreated == false)) {
+            Toast.makeText(this, "Please finish map setup.", Toast.LENGTH_LONG).show();
+        } else if ((setupType.equals("FULL")) && (pictureTimes.getSelectedItem().toString().equals("Picture Times"))) {
+            Toast.makeText(this, "Please select a picture time.", Toast.LENGTH_LONG).show();
+        } else {
+            fieldsCorrect = true;
         }
-        else {
+
+        if ((fieldsCorrect) && (setupType.equals("FULL"))) {
             //TODO Probably do this in a more secure way...
             // Currently all IDs & passwords are downloaded & stored locally, unencrypted.
 
@@ -125,6 +163,33 @@ public class AddPlant extends AppCompatActivity {
                 // No correct ID & PW match found.
                 Toast.makeText(this, "Incorrect ID & PW Pair", Toast.LENGTH_LONG).show();
             }
+        } else if (fieldsCorrect && (setupType.equals("MINOR"))) {
+            // In this case we don't have a name etc to update. Just pull existing info.
+            // for the given HelioPot and add it to the plant list.
+            boolean pairFound = false;
+
+            //TODO Remove duplicate code in this block.
+            for (DataSnapshot plant : heliopots) {
+                String helioID = plant.child("id").getValue().toString();
+                String password = plant.child("password").getValue().toString();
+
+                if (enteredHelioID.equals(helioID) && enteredPassword.equals(password)) {
+                    Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
+
+                    // Add heliopot ID to this user.
+                    //TODO only add the ID if it isn't already added.
+                    FirebaseDatabase.getInstance().getReference("user/" + username).child("ownedPots").push().setValue(helioID);
+
+                    next();
+
+                    pairFound = true;
+                    break;
+                }
+            }
+            if (pairFound == false) {
+                // No correct ID & PW match found.
+                Toast.makeText(this, "Incorrect ID & PW Pair", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -133,7 +198,7 @@ public class AddPlant extends AppCompatActivity {
 
         builder.setCancelable(true);
         builder.setTitle("Wifi connection");
-        builder.setMessage("Can HeiloPot connect to your home Wifi");
+        builder.setMessage("Can HeiloPot connect to your home Wifi?");
 
         builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -154,6 +219,11 @@ public class AddPlant extends AppCompatActivity {
 
     private void goToWifiSetting(){
         Intent intent = new Intent(this, WifiSetup.class);
+        startActivity(intent);
+    }
+
+    public void goToManualControl(View view) {
+        Intent intent = new Intent(this, ManualControl.class);
         startActivity(intent);
     }
 
