@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -82,11 +83,14 @@ public class AddPlant extends AppCompatActivity {
             Button createSetupButton = findViewById(R.id.button_map_setup);
             Spinner plantTypeSpinner = findViewById(R.id.spinner_plant_type);
             Spinner pictureTimesSpinner = findViewById(R.id.spinner_picture_times);
+            TextView setupInstructions = findViewById(R.id.textView_add_plant_instructions);
 
             plantNameEditText.setVisibility(View.GONE);
             plantTypeSpinner.setVisibility(View.GONE);
             pictureTimesSpinner.setVisibility(View.GONE);
             createSetupButton.setVisibility(View.GONE);
+
+            setupInstructions.setText("You can find your HelioPot ID and password on the base of the robot.");
         } // else don't hide anything.
     }
 

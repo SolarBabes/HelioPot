@@ -11,21 +11,21 @@
         style="@style/submit"
         android:layout_width="107dp"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:onClick="goToManualControl"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="Map Setup"
-        app:layout_constraintEnd_toEndOf="@+id/textView13"
-        app:layout_constraintHorizontal_bias="0.464"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintEnd_toEndOf="@+id/textView_add_plant_instructions"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/textView_add_plant_instructions"
+        app:layout_constraintTop_toBottomOf="@+id/textView_add_plant_instructions" />
 
     <Spinner
         android:id="@+id/spinner_plant_type"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="41dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:entries="@array/planttypes"
         app:layout_constraintEnd_toEndOf="@+id/editText_plantName"
         app:layout_constraintHorizontal_bias="0.0"
@@ -52,12 +52,11 @@
 
     <EditText
         android:id="@+id/editText_helioPotID"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="88dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
         android:ems="10"
         android:hint="HelioPot ID"
         android:inputType="number"
@@ -68,9 +67,9 @@
 
     <EditText
         android:id="@+id/editText_plantName"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Plant Name"
@@ -82,9 +81,9 @@
 
     <Spinner
         android:id="@+id/spinner_picture_times"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="41dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:entries="@array/picture_settings"
         app:layout_constraintEnd_toEndOf="@+id/editText_plantName"
         app:layout_constraintHorizontal_bias="0.0"
@@ -96,18 +95,17 @@
         style="@style/submit"
         android:layout_width="107dp"
         android:layout_height="50dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="20dp"
         android:onClick="onSubmitButtonPress"
         android:text="Submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button_map_setup"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/button_map_setup"
         app:layout_constraintTop_toBottomOf="@+id/button_map_setup" />
 
     <EditText
         android:id="@+id/editText_password"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
@@ -120,12 +118,12 @@
         app:layout_constraintTop_toBottomOf="@+id/editText_helioPotID" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/textView_add_plant_instructions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:singleLine="false"
-        android:text='Find your HelioPot ID on the base of the robot.\n\nYou can add a name to easily reference the plant, e.g. "My Plant".'
+        android:text='Find your HelioPot ID and password on the base of the robot.\n\nEnter a name for the plant to be used throughout the app, e.g. "My Cactus".\n\nPlease also select the type of plant, as well as how often you would like a picture of it to be taken.\n\nFinally, please complete the map setup and submit.'
         app:layout_constraintEnd_toEndOf="@+id/editText_password"
         app:layout_constraintStart_toStartOf="@+id/editText_password"
         app:layout_constraintTop_toBottomOf="@+id/spinner_picture_times" />
