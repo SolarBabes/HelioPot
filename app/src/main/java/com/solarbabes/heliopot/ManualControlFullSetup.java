@@ -230,12 +230,14 @@ public class ManualControlFullSetup extends AppCompatActivity {
 
     public void onFinishClick(View view) throws IOException {
         new Thread(new SendMSGThread("FINISH")).start();
+        Intent intent = getIntent();
+        String fromExtra = intent.getStringExtra("FROM");
 
         // Variables relevant based on the activity this was initiated from.
-        if (!getIntent().getStringExtra("FROM").equals("MANUAL_CONTROL")) {
-            AddPlant.mapCreated = true;
-        } else {
+        if ((fromExtra != null) && (fromExtra.equals("MANUAL_CONTROL"))) {
             ManualControl.resumed = true;
+        } else {
+            AddPlant.mapCreated = true;
         }
         onBackPressed();
     }

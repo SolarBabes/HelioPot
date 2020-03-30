@@ -220,7 +220,7 @@ public class ManualControl extends AppCompatActivity {
         new Thread(new SendMSGThread("STOP")).start();
     }
 
-    public void onFinishClick(View view) throws IOException {
+    public void onExitClick(View view) throws IOException {
         new Thread(new SendMSGThread("FINISH")).start();
         onBackPressed();
     }
