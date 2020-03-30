@@ -67,7 +67,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="onClick6"
-            android:text="Real Time" />
+            android:text="Real Time"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -102,6 +103,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
             <TextView
                 android:id="@+id/textView4"
                 style="@style/titleForGraph"
@@ -116,6 +121,10 @@
 
                 />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
             <TextView
                 android:id="@+id/textView5"
                 style="@style/titleForGraph"
@@ -127,6 +136,10 @@
                 android:id="@+id/line_chart_humidity"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
 
             <TextView
                 android:id="@+id/textView11"

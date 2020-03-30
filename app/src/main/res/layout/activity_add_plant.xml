@@ -123,7 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:singleLine="false"
-        android:text='Find your HelioPot ID and password on the base of the robot.\n\nEnter a name for the plant to be used throughout the app, e.g. "My Cactus".\n\nPlease also select the type of plant, as well as how often you would like a picture of it to be taken.\n\nFinally, please complete the map setup and submit.'
+        android:text='You can find your HelioPot ID and password on the base of the robot.\n\nEnter a name for the plant to be used throughout the app, e.g. "My Cactus".\n\nPlease also select the type of plant, as well as how often you would like a picture of it to be taken.\n\nFinally, please complete the map setup and submit.'
         app:layout_constraintEnd_toEndOf="@+id/editText_password"
         app:layout_constraintStart_toStartOf="@+id/editText_password"
         app:layout_constraintTop_toBottomOf="@+id/spinner_picture_times" />

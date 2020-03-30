@@ -123,6 +123,12 @@ public class PlantDetail extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToManualControl(View view) {
+        Intent intent = new Intent(this, ManualControl.class);
+        intent.putExtra("SETUP_TYPE", "JUST_MOVEMENT");
+        startActivity(intent);
+    }
+
 //    @Override
 //    public void finish() {
 //        super.finish();
