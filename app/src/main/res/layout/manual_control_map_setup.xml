@@ -24,6 +24,36 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <Button
+        android:id="@+id/button_set_station"
+        style="@style/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:onClick="onStationClick"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Set Station"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_finish"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_set_window"
+        style="@style/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:onClick="onWindowClick"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Set Window"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_finish"
+        app:layout_constraintTop_toTopOf="@+id/button_set_station" />
+
     <ImageButton
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
@@ -66,11 +96,11 @@
         android:onClick="onFinishClick"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="Exit"
+        android:text="Finish"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_map_setup"
+        app:layout_constraintEnd_toStartOf="@+id/button_set_window"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/button_set_station" />
 
     <ImageButton
         android:id="@+id/button_cw"
@@ -105,27 +135,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="The buttons below can be used to manually control your HelioPot.\n\nNote that in this mode, the HelioPot's map will not be updated. To reset or update the map, use 'Map Setup'."
+        android:text="Please use the below controls to move your HelioPot around your home / workspace. This process creates a map for the HelioPot, so it knows where it is allowed to move.\n\nUse the buttons to mark the location of any windows the HelioPot should consider when searching for sunlight. Please also mark the location of the charging station."
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/button_cw"
         app:layout_constraintStart_toStartOf="@+id/button_acw"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <Button
-        android:id="@+id/button_map_setup"
-        style="@style/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="goToMapSetup"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Map Setup"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_finish"
-        app:layout_constraintTop_toTopOf="@+id/button_finish" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--<a href="https://www.freepik.com/free-photos-vectors/infographic">

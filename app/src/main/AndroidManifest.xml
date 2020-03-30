@@ -49,6 +49,9 @@
             android:parentActivityName=".PlantList" />
         <activity
             android:name=".ManualControl"
+            android:parentActivityName=".PlantList"/>
+        <activity
+            android:name=".ManualControlFullSetup"
             android:parentActivityName=".PlantList">
 
             <!-- <intent-filter> -->

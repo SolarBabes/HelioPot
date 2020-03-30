@@ -227,7 +227,7 @@ public class AddPlant extends AppCompatActivity {
     }
 
     public void goToManualControl(View view) {
-        Intent intent = new Intent(this, ManualControl.class);
+        Intent intent = new Intent(this, ManualControlFullSetup.class);
         startActivity(intent);
     }
 

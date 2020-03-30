@@ -19,10 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import android.widget.CompoundButton;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 public class PlantDetail extends AppCompatActivity {
@@ -125,7 +122,6 @@ public class PlantDetail extends AppCompatActivity {
 
     public void goToManualControl(View view) {
         Intent intent = new Intent(this, ManualControl.class);
-        intent.putExtra("SETUP_TYPE", "JUST_MOVEMENT");
         startActivity(intent);
     }
 
