@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -218,6 +219,15 @@ public class MetricData extends AppCompatActivity {
             while (dataValsNew.size()>0 && dataValsNew.get(0).getX()+1580000000L<firstTime){
                 dataValsNew.remove(0);
             }
+            if (dataValsNew.size()==0){
+                Toast.makeText(getApplicationContext(), "No data in recent 2 days", Toast.LENGTH_LONG).show();
+                mode=4;
+                Button6.setBackgroundResource(R.drawable.rounded_shape_palegreen);
+                Button4.setBackgroundResource(R.drawable.rounded_shape_grey);
+                Button5.setBackgroundResource(R.drawable.rounded_shape_grey);
+                Button3.setBackgroundResource(R.drawable.rounded_shape_grey);
+                break;
+            }
             double interval = timeLength[0]/50;
             ArrayList<Entry> finalVal = new ArrayList<Entry>();
             int n = 0;
@@ -262,6 +272,15 @@ public class MetricData extends AppCompatActivity {
             while (dataValsNew.size()>0 && dataValsNew.get(0).getX()+1580000000L<firstTime){
                 dataValsNew.remove(0);
             }
+            if (dataValsNew.size()==0){
+                Toast.makeText(getApplicationContext(), "No data in recent 1 day", Toast.LENGTH_LONG).show();
+                mode=4;
+                Button6.setBackgroundResource(R.drawable.rounded_shape_palegreen);
+                Button4.setBackgroundResource(R.drawable.rounded_shape_grey);
+                Button5.setBackgroundResource(R.drawable.rounded_shape_grey);
+                Button3.setBackgroundResource(R.drawable.rounded_shape_grey);
+                break;
+            }
             double interval = dataValsNew.size()/30;
             ArrayList<Entry> finalVal = new ArrayList<Entry>();
             int n = 0;
@@ -305,6 +324,15 @@ public class MetricData extends AppCompatActivity {
             }
             while (dataValsNew.size()>0 && dataValsNew.get(0).getX()+1580000000L<firstTime){
                 dataValsNew.remove(0);
+            }
+            if (dataValsNew.size()==0){
+                Toast.makeText(getApplicationContext(), "No data in recent 12 hours", Toast.LENGTH_LONG).show();
+                mode=4;
+                Button6.setBackgroundResource(R.drawable.rounded_shape_palegreen);
+                Button4.setBackgroundResource(R.drawable.rounded_shape_grey);
+                Button5.setBackgroundResource(R.drawable.rounded_shape_grey);
+                Button3.setBackgroundResource(R.drawable.rounded_shape_grey);
+                break;
             }
             double interval = dataValsNew.size()/30;
             ArrayList<Entry> finalVal = new ArrayList<Entry>();
