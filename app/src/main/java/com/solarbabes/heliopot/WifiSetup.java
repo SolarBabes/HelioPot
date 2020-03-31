@@ -28,15 +28,16 @@ public class WifiSetup extends AppCompatActivity {
         setContentView(R.layout.activity_wifi_setup);
 
         Toolbar toolbar = findViewById(R.id.toolbarwifi);
-        toolbar.setTitle("Wifi setting");
+        toolbar.setTitle("Wi-Fi Setup");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(WifiSetup.this);
         builder.setCancelable(true);
-        builder.setTitle("Please reconnect to HelioPot's WiFi");
-        builder.setMessage("Go to WiFi setting, connect to WiFi which name is start with HelioPot");
+        builder.setTitle("Please connect to your HelioPot's Wi-Fi");
+        builder.setMessage("Open your device's Wi-Fi settings and connect to the HelioPot's Wi-fi." +
+                " Once this is done, press next.");
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -45,7 +46,7 @@ public class WifiSetup extends AppCompatActivity {
             }
         });
 
-        builder.setPositiveButton("Connected", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();
@@ -78,11 +79,25 @@ public class WifiSetup extends AppCompatActivity {
         }.start();
         thread =  new Thread(udpUtils);
         thread.start();
-        Intent intent = new Intent(this, PlantList.class);
-        startActivity(intent);
-        finish();
-        //TODO plant list page should finsh
-        // finish(); ORDER IS WRONG NOW!!!!!!
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(WifiSetup.this);
+
+        builder.setCancelable(false);
+        builder.setTitle("Success!");
+        builder.setMessage("The HelioPot is now connected to your Wi-Fi. Please connect your device" +
+                        " back to your home Wi-Fi and press finish.");
+
+        builder.setPositiveButton("Finish", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getApplicationContext(), PlantList.class);
+                startActivity(intent);
+                finish();
+                //TODO plant list page should finsh
+                // finish(); ORDER IS WRONG NOW!!!!!!
+            }
+        });
+        builder.show();
     }
 
     @Override
