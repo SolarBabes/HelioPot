@@ -146,8 +146,6 @@ public class AddPlant extends AppCompatActivity {
                 String password = plant.child("password").getValue().toString();
 
                 if (enteredHelioID.equals(helioID) && enteredPassword.equals(password)) {
-                    Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
-
                     // Add heliopot ID to this user.
                     //TODO only add the ID if it isn't already added.
                     FirebaseDatabase.getInstance().getReference("user/" + username).child("ownedPots").push().setValue(helioID);
@@ -178,8 +176,6 @@ public class AddPlant extends AppCompatActivity {
                 String password = plant.child("password").getValue().toString();
 
                 if (enteredHelioID.equals(helioID) && enteredPassword.equals(password)) {
-                    Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
-
                     // Add heliopot ID to this user.
                     //TODO only add the ID if it isn't already added.
                     FirebaseDatabase.getInstance().getReference("user/" + username).child("ownedPots").push().setValue(helioID);
@@ -198,30 +194,26 @@ public class AddPlant extends AppCompatActivity {
     }
 
     private void next(){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlant.this);
-//        builder.setCancelable(true);
-//        builder.setTitle("Wifi connection");
-//        builder.setMessage("Can HeiobsloPot connect to your home Wifi?");
-//
-//        builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                onBackPressed();
-//            }
-//        });
-//
-//        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                goToWifiSetting();
-//            }
-//        });
-//        builder.show();
-        if (setupType.equals("MINOR")){
-            onBackPressed();
-        }else{
-            goToWifiSetting();
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlant.this);
+
+        builder.setCancelable(true);
+        builder.setTitle("Wi-Fi Setup");
+        builder.setMessage("Have you previously connected the HelioPot to your home Wi-Fi?");
+
+        builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onBackPressed();
+            }
+        });
+
+        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                goToWifiSetting();
+            }
+        });
+        builder.show();
 
     }
 
