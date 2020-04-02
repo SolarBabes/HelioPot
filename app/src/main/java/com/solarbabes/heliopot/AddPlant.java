@@ -198,26 +198,30 @@ public class AddPlant extends AppCompatActivity {
     }
 
     private void next(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlant.this);
-
-        builder.setCancelable(true);
-        builder.setTitle("Wifi connection");
-        builder.setMessage("Can HeiloPot connect to your home Wifi?");
-
-        builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                onBackPressed();
-            }
-        });
-
-        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                goToWifiSetting();
-            }
-        });
-        builder.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlant.this);
+//        builder.setCancelable(true);
+//        builder.setTitle("Wifi connection");
+//        builder.setMessage("Can HeiobsloPot connect to your home Wifi?");
+//
+//        builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                onBackPressed();
+//            }
+//        });
+//
+//        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                goToWifiSetting();
+//            }
+//        });
+//        builder.show();
+        if (setupType.equals("MINOR")){
+            onBackPressed();
+        }else{
+            goToWifiSetting();
+        }
 
     }
 
