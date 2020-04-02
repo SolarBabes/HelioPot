@@ -61,7 +61,7 @@ public class MetricData extends AppCompatActivity {
     private ArrayList<Entry> moistureVal = new ArrayList<Entry>();
     private ArrayList<Entry> humidityVal = new ArrayList<Entry>();
     private ArrayList<Entry> lightVal = new ArrayList<Entry>();
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm ddMMM");
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     private DatabaseReference mDatabase;
     public static final String PLANT_NAME = "com.solarbabes.heliopot.PLANT_NAME";
 
