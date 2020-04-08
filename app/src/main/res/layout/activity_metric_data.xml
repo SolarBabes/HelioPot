@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:onClick="onClick6"
             android:text="Real Time"
-            android:textColor="#FFFFFF" />
+             />
 
     </LinearLayout>
 
